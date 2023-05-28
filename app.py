@@ -25,7 +25,7 @@ class Data(db.Model):
     def __init__(self, name, email, phone):
         self.name = name
         self.email = email
-        self.phone = phone
+        self.phone = phone.
 
 # Definição de rota para a página inicial da aplicação
 @app.route('/')
