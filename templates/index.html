@@ -1,0 +1,120 @@
+{# Esta linha estende um template base, que provavelmente inclui elementos comuns como a doctype, a tag html e a tag body. #}
+{% extends 'base.html' %}
+
+{# Isso inclui um arquivo de cabeçalho HTML, que provavelmente tem o cabeçalho do site e a navegação. #}
+{% include 'header.html' %}
+
+{# Isso define o título da página. Note que isso está em um bloco, para que possa ser substituído em um template filho. #}
+{% block title %}
+home
+{% endblock %}
+
+{# Isso define o conteúdo principal da página. #}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron p-3">
+                    <h2>
+                        manager <b>Employees</b>
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal"
+                                data-target="#mymodal">Add New Employees</button>
+                    </h2>
+
+                    {# Aqui começa a tabela para listar os funcionários. #}
+                    <table class="table table-hover table-dark">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>Partwiz</td>
+                                <td>par@gmail.com</td>
+                                <td>565767656</td>
+                                <td>
+                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal"
+                                       data-target="#modalEdit">Edit</a>
+                                    <a href="#" class="btn btn-danger btn-xs"
+                                       onclick="return confirm('Are you sure to delete?')">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {# Este é o início do modal para atualizar um novo funcionário. #}
+                <div id="modalEdit" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post">
+                                    <div class="form-group">
+                                        <label>Name:</label>
+                                        <input type="hidden" name="id" value="id">
+                                        <input type="text" class="form-control" name="name" value="parwiz" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email:</label>
+                                        <input type="email" class="form-control" name="email" value="par@gmail.com" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>phone:</label>
+                                        <input type="number" class="form-control" name="phone" value="67676788" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# Aqui termina o modal de atualização de funcionário. #}
+
+                {# Este é o início do modal para adicionar um novo funcionário. #}
+                <div id="mymodal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add Employee</h4>
+                            </div>
+                            <div class="modal-body">
+                                {# Isso é um formulário para adicionar um novo funcionário. #}
+                                <form action="" method="post">
+                                    <div class="form-group">
+                                        <label>Name:</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email:</label>
+                                        <input type="email" class="form-control" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone:</label>
+                                        <input type="number" class="form-control" name="phone" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Add Employee</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# Aqui termina o modal de adicionar funcionário. #}
+            </div>
+        </div>
+    </div>
+{% endblock %}
