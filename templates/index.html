@@ -89,20 +89,21 @@ home
                             <div class="modal-header">
                                 <h4 class="modal-title">Add Employee</h4>
                             </div>
+                            
                             <div class="modal-body">
                                 {# Isso é um formulário para adicionar um novo funcionário. #}
-                                <form action="" method="post">
+                                <form action="{{url_for('ipatrimonio,,,,,nsert')}}" method="POST">
                                     <div class="form-group">
                                         <label>Name:</label>
-                                        <input type="text" class="form-control" name="name" required>
+                                        <input type="text" class="form-control" name="name" required="1">
                                     </div>
                                     <div class="form-group">
                                         <label>Email:</label>
-                                        <input type="email" class="form-control" name="email" required>
+                                        <input type="email" class="form-control" name="email" required="1">
                                     </div>
                                     <div class="form-group">
                                         <label>Phone:</label>
-                                        <input type="number" class="form-control" name="phone" required>
+                                        <input type="number" class="form-control" name="phone" required="1">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add Employee</button>
                                 </form>
