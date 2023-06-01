@@ -19,7 +19,7 @@ home
                     {% endfor %}
                 </div>
                 <script>
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.reload(1);
                     }, 2000);
                 </script>
@@ -28,17 +28,17 @@ home
 
                 <h2>
                     manager <b>Employees</b>
-                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#mymodal">Add Employee</button>
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal"
+                        data-target="#mymodal">Add Employee</button>
                 </h2>
 
-                <!-- Add the search bar here -->
+                <!-- Adicione a barra de pesquisa aqui -->
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search" id="searchField">
+                    <input type="text" class="form-control" placeholder="Pesquisar" id="searchField">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
+                        <button class="btn btn-outline-secondary" type="button" id="searchButton">Pesquisar</button>
                     </div>
                 </div>
-
                 <table class="table table-hover table-dark">
                     <thead>
                         <tr>
@@ -67,6 +67,25 @@ home
                         {% endfor %}
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    {% for page_num in pages %}
+                    {% if page_num == current_page %}
+                    <li class="page-item active">
+                      <a class="page-link" href="#">{{ page_num }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                      <a class="page-link" href="/page/{{ page_num }}">{{ page_num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </nav>
+                <!-- End of Pagination -->
+                
             </div>
 
             <div id="modalEdit" class="modal fade" role="dialog">
@@ -84,7 +103,7 @@ home
                                 </div>
                                 <div class="form-group">
                                     <label>Email:</label>
-                                    <input type="email" class="form-control" id="editEmail" name="email" required>
+                                    <input type="email" class="form-control" id="editEmail" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                                 </div>
                                 <div class="form-group">
                                     <label>Phone:</label>
@@ -114,7 +133,7 @@ home
                                 </div>
                                 <div class="form-group">
                                     <label>Email:</label>
-                                    <input type="email" class="form-control" name="email" required>
+                                    <input type="email" class="form-control" id="editEmail" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                                 </div>
                                 <div class="form-group">
                                     <label>Phone:</label>
@@ -134,7 +153,7 @@ home
 </div>
 
 <script>
-    $('#modalEdit').on('show.bs.modal', function(event) {
+    $('#modalEdit').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var id = button.data('id');
         var name = button.data('name');
@@ -149,8 +168,8 @@ home
         $('#editPhone').val(phone);
     });
 
-    $(document).ready(function() {
-        $('#searchButton').click(function() {
+    $(document).ready(function () {
+        $('#searchButton').click(function () {
             var searchTerm = $('#searchField').val();
             if (searchTerm) {
                 window.location.href = '/search?term=' + encodeURIComponent(searchTerm);
