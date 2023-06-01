@@ -7,154 +7,154 @@ home
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="jumbotron p-3">
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message[0] }}">
-                                {{ message[1] }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                
-                
-
-                    <h2>
-                        manager <b>Employees</b>
-                        <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                data-target="#mymodal">Add Employee</button>
-                    </h2>
-
-                    <table class="table table-hover table-dark">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in data %}
-                            <tr>
-                                <td>{{ item.id }}</td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.email }}</td>
-                                <td>{{ item.phone }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
-                                       data-id="{{ item.id }}" data-name="{{ item.name }}" data-email="{{ item.email }}"
-                                       data-phone="{{ item.phone }}">Edit</a>
-                                    <a href="/delete/{{ item.id }}" class="btn btn-danger btn-xs"
-                                       onclick="return confirm('Are you sure to delete?')">Delete</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron p-3">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flashes">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
                 </div>
+                <script>
+                    setTimeout(function() {
+                        window.location.reload(1);
+                    }, 2000);
+                </script>
+                {% endif %}
+                {% endwith %}
 
-                <div id="modalEdit" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Update information</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form id="editForm" action="/update" method="post">
-                                    <div class="form-group">
-                                        <label>Name:</label>
-                                        <input type="hidden" id="editId" name="id" value="">
-                                        <input type="text" class="form-control" id="editName" name="name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email:</label>
-                                        <input type="email" class="form-control" id="editEmail" name="email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone:</label>
-                                        <input type="number" class="form-control" id="editPhone" name="phone" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
+                <h2>
+                    manager <b>Employees</b>
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#mymodal">Add Employee</button>
+                </h2>
+
+                <!-- Add the search bar here -->
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" id="searchField">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
                     </div>
                 </div>
 
-                <div id="mymodal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Add Employee</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/insert" method="post">
-                                    <div class="form-group">
-                                        <label>Name:</label>
-                                        <input type="text" class="form-control" name="name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email:</label>
-                                        <input type="email" class="form-control" name="email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone:</label>
-                                        <input type="number" class="form-control" name="phone" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Add Employee</button>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in data %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.phone }}</td>
+                            <td>
+                                <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
+                                    data-id="{{ item.id }}" data-name="{{ item.name }}" data-email="{{ item.email }}"
+                                    data-phone="{{ item.phone }}">Edit</a>
+                                <a href="/delete/{{ item.id }}" class="btn btn-danger btn-xs"
+                                    onclick="return confirm('Are you sure to delete?')">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="modalEdit" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editForm" action="/update" method="post">
+                                <div class="form-group">
+                                    <label>Name:</label>
+                                    <input type="hidden" id="editId" name="id" value="">
+                                    <input type="text" class="form-control" id="editName" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email:</label>
+                                    <input type="email" class="form-control" id="editEmail" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone:</label>
+                                    <input type="number" class="form-control" id="editPhone" name="phone" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mymodal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Employee</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/insert" method="post">
+                                <div class="form-group">
+                                    <label>Name:</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email:</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone:</label>
+                                    <input type="number" class="form-control" name="phone" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Employee</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="successMessage" class="alert alert-success text-center position-fixed" style="display: none; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        Dados inseridos com sucesso!
-    </div>
-
-{% endblock %}
-
-{% block scripts %}
 <script>
-    $(document).ready(function () {
-        var successMessage = $('#successMessage');
-        if (successMessage.length > 0) {
-            successMessage.show();
-            setTimeout(function () {
-                successMessage.hide();
-            }, 100);
-        }
+    $('#modalEdit').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var name = button.data('name');
+        var email = button.data('email');
+        var phone = button.data('phone');
 
-        $('#mymodal').on('show.bs.modal', function () {
-            $('#addEmployeeBtn').text('Add Employee');
-        });
+        console.log(id, name, email, phone);  // Logging data to the console
 
-        $('#modalEdit').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var name = button.data('name');
-            var email = button.data('email');
-            var phone = button.data('phone');
+        $('#editId').val(id);
+        $('#editName').val(name);
+        $('#editEmail').val(email);
+        $('#editPhone').val(phone);
+    });
 
-            $('#editId').val(id);
-            $('#editName').val(name);
-            $('#editEmail').val(email);
-            $('#editPhone').val(phone);
+    $(document).ready(function() {
+        $('#searchButton').click(function() {
+            var searchTerm = $('#searchField').val();
+            if (searchTerm) {
+                window.location.href = '/search?term=' + encodeURIComponent(searchTerm);
+            }
         });
     });
 </script>

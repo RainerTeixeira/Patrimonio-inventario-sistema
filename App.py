@@ -1,6 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -11,7 +12,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/crud'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,12 +24,10 @@ class Data(db.Model):
         self.email = email
         self.phone = phone
 
-
 @app.route('/')
 def index():
     data = Data.query.all()
     return render_template('index.html', bootstrap=bootstrap, data=data)
-
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insert():
@@ -46,7 +44,6 @@ def insert():
         return redirect('/')
 
     return "Erro na inserção dos dados."
-
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -70,7 +67,6 @@ def update():
 
     return "Erro na atualização dos dados."
 
-
 @app.route('/delete/<int:id>', methods=['GET', 'POST'])
 def delete(id):
     data = Data.query.get(id)
@@ -82,6 +78,15 @@ def delete(id):
     else:
         return "Erro ao excluir o item."
 
+@app.route('/search')
+def search():
+    term = request.args.get('term')
+    if term:
+        data = Data.query.filter(or_(Data.name.contains(term), Data.email.contains(term), Data.phone.contains(term))).all()
+        return render_template('index.html', bootstrap=bootstrap, data=data)
+    else:
+        flash('Nenhum termo de pesquisa fornecido.', 'error')
+        return redirect('/')
 
 if __name__ == '__main__':
     with app.app_context():
