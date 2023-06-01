@@ -1,27 +1,34 @@
-{# Esta linha estende um template base, que provavelmente inclui elementos comuns como a doctype, a tag html e a tag body. #}
 {% extends 'base.html' %}
 
-{# Isso inclui um arquivo de cabeçalho HTML, que provavelmente tem o cabeçalho do site e a navegação. #}
 {% include 'header.html' %}
 
-{# Isso define o título da página. Note que isso está em um bloco, para que possa ser substituído em um template filho. #}
 {% block title %}
 home
 {% endblock %}
 
-{# Isso define o conteúdo principal da página. #}
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="jumbotron p-3">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message[0] }}">
+                                {{ message[1] }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                
+
                     <h2>
                         manager <b>Employees</b>
                         <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                data-target="#mymodal">Add New Employees</button>
+                                data-target="#mymodal">Add Employee</button>
                     </h2>
 
-                    {# Aqui começa a tabela para listar os funcionários. #}
                     <table class="table table-hover table-dark">
                         <thead>
                             <tr>
@@ -33,23 +40,25 @@ home
                             </tr>
                         </thead>
                         <tbody>
+                            {% for item in data %}
                             <tr>
-                                <td>01</td>
-                                <td>Partwiz</td>
-                                <td>par@gmail.com</td>
-                                <td>565767656</td>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.phone }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal"
-                                       data-target="#modalEdit">Edit</a>
-                                    <a href="#" class="btn btn-danger btn-xs"
+                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
+                                       data-id="{{ item.id }}" data-name="{{ item.name }}" data-email="{{ item.email }}"
+                                       data-phone="{{ item.phone }}">Edit</a>
+                                    <a href="/delete/{{ item.id }}" class="btn btn-danger btn-xs"
                                        onclick="return confirm('Are you sure to delete?')">Delete</a>
                                 </td>
                             </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
 
-                {# Este é o início do modal para atualizar um novo funcionário. #}
                 <div id="modalEdit" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -57,19 +66,19 @@ home
                                 <h4 class="modal-title">Update information</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="post">
+                                <form id="editForm" action="/update" method="post">
                                     <div class="form-group">
                                         <label>Name:</label>
-                                        <input type="hidden" name="id" value="id">
-                                        <input type="text" class="form-control" name="name" value="parwiz" required>
+                                        <input type="hidden" id="editId" name="id" value="">
+                                        <input type="text" class="form-control" id="editName" name="name" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Email:</label>
-                                        <input type="email" class="form-control" name="email" value="par@gmail.com" required>
+                                        <input type="email" class="form-control" id="editEmail" name="email" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>phone:</label>
-                                        <input type="number" class="form-control" name="phone" value="67676788" required>
+                                        <label>Phone:</label>
+                                        <input type="number" class="form-control" id="editPhone" name="phone" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </form>
@@ -80,30 +89,26 @@ home
                         </div>
                     </div>
                 </div>
-                {# Aqui termina o modal de atualização de funcionário. #}
 
-                {# Este é o início do modal para adicionar um novo funcionário. #}
                 <div id="mymodal" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">Add Employee</h4>
                             </div>
-                            
                             <div class="modal-body">
-                                {# Isso é um formulário para adicionar um novo funcionário. #}
-                                <form action="{{url_for('ipatrimonio,,,,,nsert')}}" method="POST">
+                                <form action="/insert" method="post">
                                     <div class="form-group">
                                         <label>Name:</label>
-                                        <input type="text" class="form-control" name="name" required="1">
+                                        <input type="text" class="form-control" name="name" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Email:</label>
-                                        <input type="email" class="form-control" name="email" required="1">
+                                        <input type="email" class="form-control" name="email" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Phone:</label>
-                                        <input type="number" class="form-control" name="phone" required="1">
+                                        <input type="number" class="form-control" name="phone" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add Employee</button>
                                 </form>
@@ -114,8 +119,43 @@ home
                         </div>
                     </div>
                 </div>
-                {# Aqui termina o modal de adicionar funcionário. #}
             </div>
         </div>
     </div>
+
+    <div id="successMessage" class="alert alert-success text-center position-fixed" style="display: none; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        Dados inseridos com sucesso!
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        var successMessage = $('#successMessage');
+        if (successMessage.length > 0) {
+            successMessage.show();
+            setTimeout(function () {
+                successMessage.hide();
+            }, 100);
+        }
+
+        $('#mymodal').on('show.bs.modal', function () {
+            $('#addEmployeeBtn').text('Add Employee');
+        });
+
+        $('#modalEdit').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var name = button.data('name');
+            var email = button.data('email');
+            var phone = button.data('phone');
+
+            $('#editId').val(id);
+            $('#editName').val(name);
+            $('#editEmail').val(email);
+            $('#editPhone').val(phone);
+        });
+    });
+</script>
 {% endblock %}

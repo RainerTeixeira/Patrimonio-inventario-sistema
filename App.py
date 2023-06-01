@@ -1,9 +1,7 @@
-# Importações necessárias para o código
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
-# Inicialização da aplicação Flask
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 app.secret_key = "Secret Key"
@@ -12,10 +10,9 @@ app.secret_key = "Secret Key"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/crud'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Inicialização do SQLAlchemy
 db = SQLAlchemy(app)
 
-# Definição do modelo de dados para SQLAlchemy
+
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -27,13 +24,14 @@ class Data(db.Model):
         self.email = email
         self.phone = phone
 
-# Definição de rota para a página inicial da aplicação
+
 @app.route('/')
-def Index():
-    return render_template('index.html', bootstrap=bootstrap)
+def index():
+    data = Data.query.all()
+    return render_template('index.html', bootstrap=bootstrap, data=data)
 
 
-@app.route('/insert', methods=['POST'])
+@app.route('/insert', methods=['GET', 'POST'])
 def insert():
     if request.method == 'POST':
         name = request.form['name']
@@ -44,9 +42,48 @@ def insert():
         db.session.add(my_data)
         db.session.commit()
 
-        return redirect (url_for('Index'))
-            
+        flash('Dados inseridos com sucesso!', 'success')
+        return redirect('/')
 
-# Execução da aplicação
+    return "Erro na inserção dos dados."
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    if request.method == 'POST':
+        id = request.form['id']
+        name = request.form['name']
+        email = request.form['email']
+        phone = request.form['phone']
+
+        data = Data.query.get(id)
+        if data:
+            data.name = name
+            data.email = email
+            data.phone = phone
+            db.session.commit()
+            flash('Dados atualizados com sucesso!', 'success')
+            return redirect('/')
+
+        else:
+            return "Erro ao atualizar os dados."
+
+    return "Erro na atualização dos dados."
+
+
+@app.route('/delete/<int:id>', methods=['GET', 'POST'])
+def delete(id):
+    data = Data.query.get(id)
+    if data:
+        db.session.delete(data)
+        db.session.commit()
+        flash('Item excluído com sucesso!', 'success')
+        return redirect('/')
+    else:
+        return "Erro ao excluir o item."
+
+
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
