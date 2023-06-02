@@ -45,6 +45,8 @@ def insert():
 
     return "Erro na inserção dos dados."
 
+
+
 @app.route('/update', methods=['POST'])
 def update():
     if request.method == 'POST':
