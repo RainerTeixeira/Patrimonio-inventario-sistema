@@ -26,8 +26,25 @@ class Data(db.Model):
 
 @app.route('/')
 def index():
+    return render_template('index.html', bootstrap=bootstrap)
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+
+    # Substitua estas linhas com a lógica de autenticação correta
+    user = User.query.filter_by(username=username).first()
+    if user and user.check_password(password):
+        return redirect(url_for('painel'))
+
+    flash('Falha no login. Tente novamente.', 'error')
+    return redirect(url_for('index'))
+
+@app.route('/painel')
+def painel():
     data = Data.query.all()
-    return render_template('index.html', bootstrap=bootstrap, data=data)
+    return render_template('painel.html', bootstrap=bootstrap, data=data)
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insert():
@@ -41,11 +58,9 @@ def insert():
         db.session.commit()
 
         flash('Dados inseridos com sucesso!', 'success')
-        return redirect('/')
+        return redirect('/painel')
 
     return "Erro na inserção dos dados."
-
-
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -62,7 +77,7 @@ def update():
             data.phone = phone
             db.session.commit()
             flash('Dados atualizados com sucesso!', 'success')
-            return redirect('/')
+            return redirect('/painel')
 
         else:
             return "Erro ao atualizar os dados."
@@ -76,7 +91,7 @@ def delete(id):
         db.session.delete(data)
         db.session.commit()
         flash('Item excluído com sucesso!', 'success')
-        return redirect('/')
+        return redirect('/painel')
     else:
         return "Erro ao excluir o item."
 
@@ -85,14 +100,12 @@ def search():
     term = request.args.get('term')
     if term:
         data = Data.query.filter(or_(Data.name.contains(term), Data.email.contains(term), Data.phone.contains(term))).all()
-        return render_template('index.html', bootstrap=bootstrap, data=data)
+        return render_template('painel.html', bootstrap=bootstrap, data=data)
     else:
         flash('Nenhum termo de pesquisa fornecido.', 'error')
-        return redirect('/')
+        return redirect('/painel')
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-    
