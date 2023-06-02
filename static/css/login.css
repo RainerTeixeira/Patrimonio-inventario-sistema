@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     text-align: center;
-    background-image: url('static/img/backgroundLogin.jpg');
+    background-image: url('{{ url_for('static', filename='img/backgroundLogin.jpg') }}');
     background-size: cover;
     background-position: center;
 }
