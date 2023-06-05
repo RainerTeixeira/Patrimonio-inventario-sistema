@@ -4,7 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib import colors
 
 app = Flask(__name__)
@@ -147,17 +148,22 @@ def gerar_pdf():
     # Cria um arquivo PDF
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Adiciona o título ao PDF
+    styles = getSampleStyleSheet()
+    title = Paragraph("Inventário, Manual de Procedimentos, Acervo de Conhecimentos e Tecnologia Operacional - IMPACTO", styles["Title"])
+    elems = [title]
+
+    # Cria a tabela
     table = Table(data)
     
     # Aplica um estilo à tabela
     style = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('FONTSIZE', (0, 0), (-1, 0), 14),
-
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
         ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
         ('GRID', (0,0), (-1,-1), 1, colors.black)
@@ -165,8 +171,9 @@ def gerar_pdf():
     table.setStyle(style)
 
     # Adiciona a tabela ao PDF
-    elems = []
     elems.append(table)
+
+    # Constrói o PDF
     doc.build(elems)
 
     # Envia o PDF como resposta
@@ -177,6 +184,7 @@ def gerar_pdf():
     response.headers['Content-Disposition'] = 'attachment; filename=relatorio.pdf'
 
     return response
+
 
 
 
