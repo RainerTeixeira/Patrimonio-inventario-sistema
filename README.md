@@ -1,4 +1,5 @@
 
+
 # Gestor de Funcionários com Flask
 
 Este repositório contém um aplicativo web desenvolvido com Flask, um micro-framework de Python, que gerencia informações de funcionários em uma empresa. O aplicativo também usa Bootstrap para auxiliar no design da interface do usuário e SQLAlchemy para interagir com o banco de dados MySQL.
@@ -26,8 +27,8 @@ O aplicativo possui várias rotas para realizar diferentes operações:
 Para iniciar o aplicativo, você pode copiar e colar o seguinte comando no seu terminal:
 
 ```python
-python app.py
-
+python App.py
+```
 
 ## Observações
 
