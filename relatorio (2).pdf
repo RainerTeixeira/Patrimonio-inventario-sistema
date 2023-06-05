@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-icons.css">
+
+    <meta charset="UTF-8">
+    <title> IMPACTO </title>
+</head>
+<body>
+
+<div class=" bg-light p-4 mb-2">
+    <h1 class="display-7">Inventário, Manual de Procedimentos, Acervo de Conhecimentos e Tecnologia Operacional - IMPACTO</h1>
+  </div>
+
+
+
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-icons.css">
+
+    <meta charset="UTF-8">
+    <title>
+Funcionários
+</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class=" bg-light p-4 mb-2">
+                
+                
+                
+
+                <div class="d-flex justify-content-between">
+                    <h2>
+                        Gerenciar <b>Funcionários</b>
+                    </h2>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAddFuncionario">Adicionar Funcionário</button>
+                </div>
+
+                <!-- Adicione a barra de pesquisa aqui -->
+                <div class="mt-3 input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Pesquisar" id="searchField">
+                    <button class="btn btn-primary" type="button" id="searchButton">
+                        <i class="fa fa-search me-2"></i> Pesquisar
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-dark">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Ativo</th>
+                                <th>Ramal</th>
+                                <th>Login</th>
+                                <th>Senha</th>
+                                <th>Nível de Permissão</th>
+                                <th>Setor</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>1</td>
+                                <td>Rainer Oliveira Teixeira</td>
+                                <td>Ativo</td>
+                                <td>3228882</td>
+                                <td>rainer</td>
+                                <td>rainer</td>
+                                <td>Administrador</td>
+                                <td>Analista de Sistemas</td>
+                                <td>
+                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
+                                        data-id="1" data-nome="Rainer Oliveira Teixeira" data-ativo="Ativo"
+                                        data-ramal="3228882" data-login="rainer"
+                                        data-senha="rainer" data-nivel_permissao="Administrador"
+                                        data-setor_id="1">Editar</a>
+                                    <a href="/delete/1" class="btn btn-danger btn-xs"
+                                        onclick="return confirm('Tem certeza que deseja apagar?')">Apagar</a>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>4</td>
+                                <td>admin</td>
+                                <td>Ativo</td>
+                                <td>33</td>
+                                <td>aaaa</td>
+                                <td>aaa</td>
+                                <td>Administrador</td>
+                                <td>Analista de Sistemas</td>
+                                <td>
+                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
+                                        data-id="4" data-nome="admin" data-ativo="Ativo"
+                                        data-ramal="33" data-login="aaaa"
+                                        data-senha="aaa" data-nivel_permissao="Administrador"
+                                        data-setor_id="1">Editar</a>
+                                    <a href="/delete/4" class="btn btn-danger btn-xs"
+                                        onclick="return confirm('Tem certeza que deseja apagar?')">Apagar</a>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+
+                    <a href="/gerar_pdf" class="btn btn-primary" target="_blank">Gerar Relatório em PDF</a>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        
+                    </ul>
+                </nav>
+                <!-- End of Pagination -->
+            </div>
+
+            <div id="modalEdit" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Atualizar informações</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editForm" action="/update" method="post">
+                                <div class="form-group">
+                                    <label>Nome:</label>
+                                    <input type="hidden" id="editId" name="id" value="">
+                                    <input type="text" class="form-control" id="editNome" name="nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ativo:</label>
+                                    <input type="text" class="form-control" id="editAtivo" name="ativo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ramal:</label>
+                                    <input type="number" class="form-control" id="editRamal" name="ramal" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Login:</label>
+                                    <input type="text" class="form-control" id="editLogin" name="login" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Senha:</label>
+                                    <input type="password" class="form-control" id="editSenha" name="senha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nível de Permissão:</label>
+                                    <input type="text" class="form-control" id="editNivel_permissao" name="nivel_permissao" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Setor ID:</label>
+                                    <input type="number" class="form-control" id="editSetor_id" name="setor_id" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Atualizar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modalAddFuncionario" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Adicionar Funcionário</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addForm" action="/insert" method="post">
+                                <div class="form-group">
+                                    <label>Nome:</label>
+                                    <input type="text" class="form-control" id="addNome" name="nome" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ativo:</label>
+                                    <input type="text" class="form-control" id="addAtivo" name="ativo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ramal:</label>
+                                    <input type="number" class="form-control" id="addRamal" name="ramal" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Login:</label>
+                                    <input type="text" class="form-control" id="addLogin" name="login" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Senha:</label>
+                                    <input type="password" class="form-control" id="addSenha" name="senha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nível de Permissão:</label>
+                                    <input type="text" class="form-control" id="addNivel_permissao" name="nivel_permissao" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Setor ID:</label>
+                                    <input type="number" class="form-control" id="addSetor_id" name="setor_id" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Adicionar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#modalEdit').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var nome = button.data('nome');
+        var ativo = button.data('ativo');
+        var ramal = button.data('ramal');
+        var login = button.data('login');
+        var senha = button.data('senha');
+        var nivel_permissao = button.data('nivel_permissao');
+        var setor_id = button.data('setor_id');
+
+        console.log(id, nome, ativo, ramal, login, senha, nivel_permissao, setor_id);  // Logging data to the console
+
+        $('#editId').val(id);
+        $('#editNome').val(nome);
+        $('#editAtivo').val(ativo);
+        $('#editRamal').val(ramal);
+        $('#editLogin').val(login);
+        $('#editSenha').val(senha);
+        $('#editNivel_permissao').val(nivel_permissao);
+        $('#editSetor_id').val(setor_id);
+    });
+
+    $(document).ready(function () {
+        $('#searchButton').click(function () {
+            var searchTerm = $('#searchField').val();
+            if (searchTerm) {
+                window.location.href = '/search?term=' + encodeURIComponent(searchTerm);
+            }
+        });
+    });
+
+    // Função para gerar o PDF ao clicar no botão "Gerar Relatório em PDF"
+    $('#gerarPdfButton').click(function () {
+        window.open('/gerar_pdf', '_blank');
+    });
+</script>
+
+
+
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

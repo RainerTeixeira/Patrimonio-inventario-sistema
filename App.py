@@ -1,13 +1,11 @@
-from flask import make_response, render_template, request
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for, make_response
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
-from flask import make_response, render_template
+from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.lib import colors
-
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -140,8 +138,41 @@ def funcionarios():
 @app.route('/gerar_pdf')
 def gerar_pdf():
     funcionarios = Funcionario.query.all()  # Obter a lista de funcionários do banco de dados
-    rendered_template = render_template('funcionarios.html', funcionarios=funcionarios)
-    response = make_response(rendered_template)
+    
+    # Cria uma lista de listas para a tabela
+    data = [["ID", "Nome", "Status", "Ramal", "Login", "Senha", "Nível de Permissão", "Setor ID"]]
+    for funcionario in funcionarios:
+        data.append([funcionario.id, funcionario.nome, funcionario.ativo, funcionario.ramal, funcionario.login, funcionario.senha, funcionario.nivel_permissao, funcionario.setor_id])
+
+    # Cria um arquivo PDF
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    table = Table(data)
+    
+    # Aplica um estilo à tabela
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0,0), (-1,-1), 1, colors.black)
+    ])
+    table.setStyle(style)
+
+    # Adiciona a tabela ao PDF
+    elems = []
+    elems.append(table)
+    doc.build(elems)
+
+    # Envia o PDF como resposta
+    pdf_data = buffer.getvalue()
+    buffer.close()
+    response = make_response(pdf_data)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'attachment; filename=relatorio.pdf'
 
