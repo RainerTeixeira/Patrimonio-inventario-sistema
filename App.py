@@ -1,7 +1,13 @@
-from flask import Flask, flash, redirect, render_template, send_from_directory, request, url_for
+from flask import make_response, render_template, request
+from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
+from flask import make_response, render_template
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.lib import colors
+
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -130,6 +136,19 @@ def search():
 def funcionarios():
     funcionarios = Funcionario.query.all()
     return render_template('funcionarios.html', bootstrap=bootstrap, funcionarios=funcionarios)
+
+@app.route('/gerar_pdf')
+def gerar_pdf():
+    funcionarios = Funcionario.query.all()  # Obter a lista de funcionários do banco de dados
+    rendered_template = render_template('funcionarios.html', funcionarios=funcionarios)
+    response = make_response(rendered_template)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=relatorio.pdf'
+
+    return response
+
+
+
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

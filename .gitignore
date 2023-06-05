@@ -1,0 +1,8 @@
+# Pastas
+.git
+.idea
+.vscode
+__pycache__
+
+# Arquivos
+*.pyc
