@@ -3,7 +3,7 @@
 {% include 'header.html' %}
 
 {% block title %}
-home
+Funcionários
 {% endblock %}
 
 {% block body %}
@@ -27,9 +27,9 @@ home
                 {% endwith %}
 
                 <h2>
-                    manager <b>Employees</b>
+                    Gerenciar <b>Funcionários</b>
                     <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                        data-target="#mymodal">Add Employee</button>
+                        data-target="#modalAddFuncionario">Adicionar Funcionário</button>
                 </h2>
 
                 <!-- Adicione a barra de pesquisa aqui -->
@@ -46,24 +46,34 @@ home
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Action</th>
+                                <th>Ativo</th>
+                                <th>Ramal</th>
+                                <th>Login</th>
+                                <th>Senha</th>
+                                <th>Nível de Permissão</th>
+                                <th>Setor</th>
+                                <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for item in data %}
+                            {% for item in funcionarios %}
                             <tr>
                                 <td>{{ item.id }}</td>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.email }}</td>
-                                <td>{{ item.phone }}</td>
+                                <td>{{ item.nome }}</td>
+                                <td>{{ item.ativo }}</td>
+                                <td>{{ item.ramal }}</td>
+                                <td>{{ item.login }}</td>
+                                <td>{{ item.senha }}</td>
+                                <td>{{ item.nivel_permissao }}</td>
+                                <td>{{ item.setor.setor_nome }}</td>
                                 <td>
                                     <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
-                                        data-id="{{ item.id }}" data-name="{{ item.name }}" data-email="{{ item.email }}"
-                                        data-phone="{{ item.phone }}">Edit</a>
+                                        data-id="{{ item.id }}" data-nome="{{ item.nome }}" data-ativo="{{ item.ativo }}"
+                                        data-ramal="{{ item.ramal }}" data-login="{{ item.login }}"
+                                        data-senha="{{ item.senha }}" data-nivel_permissao="{{ item.nivel_permissao }}"
+                                        data-setor_id="{{ item.setor_id }}">Editar</a>
                                     <a href="/delete/{{ item.id }}" class="btn btn-danger btn-xs"
-                                        onclick="return confirm('Are you sure to delete?')">Delete</a>
+                                        onclick="return confirm('Tem certeza que deseja apagar?')">Apagar</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -88,71 +98,101 @@ home
                     </ul>
                 </nav>
                 <!-- End of Pagination -->
-
             </div>
 
             <div id="modalEdit" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Update information</h4>
+                            <h4 class="modal-title">Atualizar informações</h4>
                         </div>
                         <div class="modal-body">
                             <form id="editForm" action="/update" method="post">
                                 <div class="form-group">
-                                    <label>Name:</label>
+                                    <label>Nome:</label>
                                     <input type="hidden" id="editId" name="id" value="">
-                                    <input type="text" class="form-control" id="editName" name="name" required>
+                                    <input type="text" class="form-control" id="editNome" name="nome" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Email:</label>
-                                    <input type="email" class="form-control" id="editEmail" name="email" required
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                    <label>Ativo:</label>
+                                    <input type="text" class="form-control" id="editAtivo" name="ativo" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Phone:</label>
-                                    <input type="number" class="form-control" id="editPhone" name="phone" required>
+                                    <label>Ramal:</label>
+                                    <input type="number" class="form-control" id="editRamal" name="ramal" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <div class="form-group">
+                                    <label>Login:</label>
+                                    <input type="text" class="form-control" id="editLogin" name="login" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Senha:</label>
+                                    <input type="password" class="form-control" id="editSenha" name="senha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nível de Permissão:</label>
+                                    <input type="text" class="form-control" id="editNivel_permissao" name="nivel_permissao" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Setor ID:</label>
+                                    <input type="number" class="form-control" id="editSetor_id" name="setor_id" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Atualizar</button>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="mymodal" class="modal fade" role="dialog">
+            <div id="modalAddFuncionario" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Employee</h4>
+                            <h4 class="modal-title">Adicionar Funcionário</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="/insert" method="post">
+                            <form id="addForm" action="/insert" method="post">
                                 <div class="form-group">
-                                    <label>Name:</label>
-                                    <input type="text" class="form-control" name="name" required>
+                                    <label>Nome:</label>
+                                    <input type="text" class="form-control" id="addNome" name="nome" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Email:</label>
-                                    <input type="email" class="form-control" id="editEmail" name="email" required
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                    <label>Ativo:</label>
+                                    <input type="text" class="form-control" id="addAtivo" name="ativo" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Phone:</label>
-                                    <input type="number" class="form-control" name="phone" required>
+                                    <label>Ramal:</label>
+                                    <input type="number" class="form-control" id="addRamal" name="ramal" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Add Employee</button>
+                                <div class="form-group">
+                                    <label>Login:</label>
+                                    <input type="text" class="form-control" id="addLogin" name="login" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Senha:</label>
+                                    <input type="password" class="form-control" id="addSenha" name="senha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nível de Permissão:</label>
+                                    <input type="text" class="form-control" id="addNivel_permissao" name="nivel_permissao" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Setor ID:</label>
+                                    <input type="number" class="form-control" id="addSetor_id" name="setor_id" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Adicionar</button>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -161,16 +201,24 @@ home
     $('#modalEdit').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var id = button.data('id');
-        var name = button.data('name');
-        var email = button.data('email');
-        var phone = button.data('phone');
+        var nome = button.data('nome');
+        var ativo = button.data('ativo');
+        var ramal = button.data('ramal');
+        var login = button.data('login');
+        var senha = button.data('senha');
+        var nivel_permissao = button.data('nivel_permissao');
+        var setor_id = button.data('setor_id');
 
-        console.log(id, name, email, phone);  // Logging data to the console
+        console.log(id, nome, ativo, ramal, login, senha, nivel_permissao, setor_id);  // Logging data to the console
 
         $('#editId').val(id);
-        $('#editName').val(name);
-        $('#editEmail').val(email);
-        $('#editPhone').val(phone);
+        $('#editNome').val(nome);
+        $('#editAtivo').val(ativo);
+        $('#editRamal').val(ramal);
+        $('#editLogin').val(login);
+        $('#editSenha').val(senha);
+        $('#editNivel_permissao').val(nivel_permissao);
+        $('#editSetor_id').val(setor_id);
     });
 
     $(document).ready(function () {
@@ -182,6 +230,5 @@ home
         });
     });
 </script>
-
 
 {% endblock %}

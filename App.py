@@ -8,30 +8,31 @@ bootstrap = Bootstrap(app)
 app.secret_key = "Secret Key"
 
 # Configurações do SQLAlchemy para a conexão com o banco de dados
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/crud'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/empresa'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-class Data(db.Model):
+class Funcionario(db.Model):
+    __tablename__ = 'funcionarios'  # Nome correto da tabela
+
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    phone = db.Column(db.String(100))
+    nome = db.Column(db.String(100), nullable=False)
+    ativo = db.Column(db.Enum('Ativo', 'Desligado'), nullable=False)
+    ramal = db.Column(db.Integer)
+    login = db.Column(db.String(45))
+    senha = db.Column(db.String(45))
+    nivel_permissao = db.Column(db.Enum('Administrador', 'Usuário'))
+    setor_id = db.Column(db.Integer, db.ForeignKey('setor.id'), nullable=False)
 
-    def __init__(self, name, email, phone):
-        self.name = name
-        self.email = email
-        self.phone = phone
+    setor = db.relationship('Setor', backref=db.backref('funcionarios', lazy=True))
 
-class User(db.Model):
+class Setor(db.Model):
+    __tablename__ = 'setor'  # Nome correto da tabela
+
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100))
-    password = db.Column(db.String(100))
-
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
+    setor_nome = db.Column(db.String(45))
+    departamento = db.Column(db.String(45))
 
 @app.route('/')
 def index():
@@ -50,71 +51,85 @@ def login():
 
 @app.route('/painel')
 def painel():
-    data = Data.query.all()
-    return render_template('painel.html', bootstrap=bootstrap, data=data)
+    return render_template('painel.html', bootstrap=bootstrap)
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insert():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        phone = request.form['phone']
+        nome = request.form['nome']
+        ativo = request.form['ativo']
+        ramal = request.form['ramal']
+        login = request.form['login']
+        senha = request.form['senha']
+        nivel_permissao = request.form['nivel_permissao']
+        setor_id = request.form['setor_id']
 
-        my_data = Data(name, email, phone)
-        db.session.add(my_data)
+        funcionario = Funcionario(nome=nome, ativo=ativo, ramal=ramal, login=login, senha=senha,
+                                  nivel_permissao=nivel_permissao, setor_id=setor_id)
+        db.session.add(funcionario)
         db.session.commit()
 
-        flash('Dados inseridos com sucesso!', 'success')
-        return redirect('/funcionarios')
+        flash('Funcionário inserido com sucesso!', 'success')
+        return redirect(url_for('funcionarios'))
 
-    return "Erro na inserção dos dados."
+    return "Erro na inserção do funcionário."
 
 @app.route('/update', methods=['POST'])
 def update():
     if request.method == 'POST':
         id = request.form['id']
-        name = request.form['name']
-        email = request.form['email']
-        phone = request.form['phone']
+        nome = request.form['nome']
+        ativo = request.form['ativo']
+        ramal = request.form['ramal']
+        login = request.form['login']
+        senha = request.form['senha']
+        nivel_permissao = request.form['nivel_permissao']
+        setor_id = request.form['setor_id']
 
-        data = Data.query.get(id)
-        if data:
-            data.name = name
-            data.email = email
-            data.phone = phone
+        funcionario = Funcionario.query.get(id)
+        if funcionario:
+            funcionario.nome = nome
+            funcionario.ativo = ativo
+            funcionario.ramal = ramal
+            funcionario.login = login
+            funcionario.senha = senha
+            funcionario.nivel_permissao = nivel_permissao
+            funcionario.setor_id = setor_id
+
             db.session.commit()
-            flash('Dados atualizados com sucesso!', 'success')
-            return redirect('/funcionarios')
+            flash('Funcionário atualizado com sucesso!', 'success')
+            return redirect(url_for('funcionarios'))
 
         else:
-            return "Erro ao atualizar os dados."
+            return "Erro ao atualizar o funcionário."
 
-    return "Erro na atualização dos dados."
+    return "Erro na atualização do funcionário."
 
 @app.route('/delete/<int:id>', methods=['GET', 'POST'])
 def delete(id):
-    data = Data.query.get(id)
-    if data:
-        db.session.delete(data)
+    funcionario = Funcionario.query.get(id)
+    if funcionario:
+        db.session.delete(funcionario)
         db.session.commit()
-        flash('Item excluído com sucesso!', 'success')
-        return redirect('/funcionarios')
+        flash('Funcionário excluído com sucesso!', 'success')
+        return redirect(url_for('funcionarios'))
     else:
-        return "Erro ao excluir o item."
+        return "Erro ao excluir o funcionário."
 
 @app.route('/search')
 def search():
     term = request.args.get('term')
     if term:
-        data = Data.query.filter(or_(Data.name.contains(term), Data.email.contains(term), Data.phone.contains(term))).all()
-        return render_template('funcionarios.html', bootstrap=bootstrap, data=data)
+        funcionarios = Funcionario.query.filter(or_(Funcionario.nome.contains(term),
+                                                    Funcionario.login.contains(term))).all()
+        return render_template('funcionarios.html', bootstrap=bootstrap, funcionarios=funcionarios)
     else:
-        return redirect('/funcionarios')
+        return redirect(url_for('funcionarios'))
 
 @app.route('/funcionarios')
 def funcionarios():
-    data = Data.query.all()
-    return render_template('funcionarios.html', bootstrap=bootstrap, data=data)
+    funcionarios = Funcionario.query.all()
+    return render_template('funcionarios.html', bootstrap=bootstrap, funcionarios=funcionarios)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
