@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Página Inicial</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Login.css') }}">
+    <meta charset="UTF-8">
+    <title>{% block title %}Login{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Bem-vindo à Página Inicial.</h1>
-        <form action="{{ url_for('login') }}" method="post">
-            <input type="text" name="username" placeholder="Usuário" required>
-            <input type="password" name="password" placeholder="Senha" required>
-            <input type="submit" value="Login" class="button">
-        </form>
-    </div>
+    {% block body %}
+        <div class="container">
+            <h2>Bem-vindo à Página de Login. Rainer</h2>
+            <form action="{{ url_for('login') }}" method="post">
+                <input type="text" name="username" placeholder="Usuário" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <input type="submit" value="Login" class="button">
+            </form>
+        </div>
+    {% endblock %}
 </body>
 </html>

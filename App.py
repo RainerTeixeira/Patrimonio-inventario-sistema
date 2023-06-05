@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, send_from_directory, request, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
@@ -24,6 +24,15 @@ class Data(db.Model):
         self.email = email
         self.phone = phone
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    password = db.Column(db.String(100))
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
 @app.route('/')
 def index():
     return render_template('index.html', bootstrap=bootstrap)
@@ -33,9 +42,7 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    # Substitua estas linhas com a lógica de autenticação correta
-    user = User.query.filter_by(username=username).first()
-    if user and user.check_password(password):
+    if username == 'rainer' and password == 'rainer':
         return redirect(url_for('painel'))
 
     flash('Falha no login. Tente novamente.', 'error')
@@ -58,7 +65,7 @@ def insert():
         db.session.commit()
 
         flash('Dados inseridos com sucesso!', 'success')
-        return redirect('/painel')
+        return redirect('/funcionarios')
 
     return "Erro na inserção dos dados."
 
@@ -77,7 +84,7 @@ def update():
             data.phone = phone
             db.session.commit()
             flash('Dados atualizados com sucesso!', 'success')
-            return redirect('/painel')
+            return redirect('/funcionarios')
 
         else:
             return "Erro ao atualizar os dados."
@@ -91,7 +98,7 @@ def delete(id):
         db.session.delete(data)
         db.session.commit()
         flash('Item excluído com sucesso!', 'success')
-        return redirect('/painel')
+        return redirect('/funcionarios')
     else:
         return "Erro ao excluir o item."
 
@@ -100,12 +107,14 @@ def search():
     term = request.args.get('term')
     if term:
         data = Data.query.filter(or_(Data.name.contains(term), Data.email.contains(term), Data.phone.contains(term))).all()
-        return render_template('painel.html', bootstrap=bootstrap, data=data)
+        return render_template('funcionarios.html', bootstrap=bootstrap, data=data)
     else:
-        flash('Nenhum termo de pesquisa fornecido.', 'error')
-        return redirect('/painel')
+        return redirect('/funcionarios')
+
+@app.route('/funcionarios')
+def funcionarios():
+    data = Data.query.all()
+    return render_template('funcionarios.html', bootstrap=bootstrap, data=data)
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+    app.run(port=5000, debug=True)

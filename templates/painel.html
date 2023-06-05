@@ -1,180 +1,148 @@
 {% extends 'base.html' %}
 
-{% include 'header.html' %}
-
-{% block title %}
-home
-{% endblock %}
+{% block title %} IMPACTO {% endblock %}
 
 {% block body %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class=" bg-light p-4 mb-2">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                <div class="flashes">
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-                <script>
-                    setTimeout(function () {
-                        window.location.reload(1);
-                    }, 2000);
-                </script>
-                {% endif %}
-                {% endwith %}
+    <div class="navigation bg-dark text-white p-2 mb-3 rounded">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#"><i class="bi-house-fill"></i> Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#"><i class="bi-archive-fill"></i> Inventário</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#"><i class="bi-people-fill"></i> Recursos Humanos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#"><i class="bi-bar-chart-fill"></i> Financeiro</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#"><i class="bi-bag-fill"></i> Compras</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#"><i class="bi-file-earmark-fill"></i> Relatórios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#"><i class="bi-gear-fill"></i> Configurações</a>
+            </li>
+            <li class="nav-item search-bar">
+                <form class="form-inline d-flex" method="get" action="/search">
+                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar"
+                        name="term" style="width: 200px;">
+                    <button class="btn btn-outline-light" type="submit"><i class="bi-search"></i></button>
+                </form>
+            </li>
+            
+        </ul>
+    </div>
 
-                <h2>
-                    manager <b>Employees</b>
-                    <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                        data-target="#mymodal">Add Employee</button>
-                </h2>
-
-                <!-- Adicione a barra de pesquisa aqui -->
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Pesquisar" id="searchField">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="searchButton">Pesquisar</button>
-                    </div>
-                </div>
-                <table class="table table-hover table-dark">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in data %}
-                        <tr>
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.email }}</td>
-                            <td>{{ item.phone }}</td>
-                            <td>
-                                <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
-                                    data-id="{{ item.id }}" data-name="{{ item.name }}" data-email="{{ item.email }}"
-                                    data-phone="{{ item.phone }}">Edit</a>
-                                <a href="/delete/{{ item.id }}" class="btn btn-danger btn-xs"
-                                    onclick="return confirm('Are you sure to delete?')">Delete</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    {% for page_num in pages %}
-                    {% if page_num == current_page %}
-                    <li class="page-item active">
-                      <a class="page-link" href="#">{{ page_num }}</a>
-                    </li>
-                    {% else %}
-                    <li class="page-item">
-                      <a class="page-link" href="/page/{{ page_num }}">{{ page_num }}</a>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-                  </ul>
-                </nav>
-                <!-- End of Pagination -->
-                
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="summary-panel p-3 bg-light border rounded">
+                <h3>Inventário</h3>
+                <ul class="list-unstyled">
+                    <li>Total de ativos: 500</li>
+                    <li>Itens em baixa quantidade: 10</li>
+                    <li>Itens em alta quantidade: 20</li>
+                    <li>Últimas aquisições: 30</li>
+                    <li>Última atualização: 29/05/2023</li>
+                </ul>
             </div>
-
-            <div id="modalEdit" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Update information</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editForm" action="/update" method="post">
-                                <div class="form-group">
-                                    <label>Name:</label>
-                                    <input type="hidden" id="editId" name="id" value="">
-                                    <input type="text" class="form-control" id="editName" name="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email:</label>
-                                    <input type="email" class="form-control" id="editEmail" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone:</label>
-                                    <input type="number" class="form-control" id="editPhone" name="phone" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-6">
+            <div class="summary-panel p-3 bg-light border rounded">
+                <h3>Recursos Humanos</h3>
+                <ul class="list-unstyled">
+                    <li>Total de funcionários: 50</li>
+                    <li>Funcionários em férias: 3</li>
+                    <li>Aniversariantes do mês: 2</li>
+                    <li>Número de contratações no último mês: 5</li>
+                    <li>Número de desligamentos no último mês: 1</li>
+                </ul>
             </div>
+        </div>
+    </div>
 
-            <div id="mymodal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Employee</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/insert" method="post">
-                                <div class="form-group">
-                                    <label>Name:</label>
-                                    <input type="text" class="form-control" name="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email:</label>
-                                    <input type="email" class="form-control" id="editEmail" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone:</label>
-                                    <input type="number" class="form-control" name="phone" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Add Employee</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="summary-panel p-3 bg-light border rounded">
+                <h3>Financeiro</h3>
+                <ul class="list-unstyled">
+                    <li>Total de vendas: R$ 100.000</li>
+                    <li>Faturamento do mês: R$ 50.000</li>
+                    <li>Lucro líquido: R$ 10.000</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="summary-panel p-3 bg-light border rounded">
+                <h3>Compras</h3>
+                <ul class="list-unstyled">
+                    <li>Total de pedidos: 20</li>
+                    <li>Pedidos em andamento: 5</li>
+                    <li>Pedidos entregues: 15</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="links-section p-3 bg-light border rounded">
+                <h3>Links Rápidos - Inventário</h3>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="link-item"><i class="bi-plus-circle-fill"></i> Adicionar Item</a></li>
+                    <li><a href="#" class="link-item"><i class="bi-search-fill"></i> Busca avançada</a></li>
+                    <li><a href="#" class="link-item"><i class="bi-file-earmark-text-fill"></i> Gerar relatórios</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="links-section p-3 bg-light border rounded">
+                <h3>Links Rápidos - Recursos Humanos</h3>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('funcionarios') }}" class="link-item"><i class="bi bi-person-fill"></i>Funcionário</a></li>
+                    <li><a href="#" class="link-item"><i class="bi-person-plus-fill"></i> Novo funcionário</a></li>
+                    <li><a href="#" class="link-item"><i class="bi-person-search-fill"></i> Busca de funcionário</a></li>
+                    <li><a href="#" class="link-item"><i class="bi-credit-card-2-front-fill"></i> Folha de pagamento</a></li>
+                    <li><a href="#" class="link-item"><i class="bi-people-fill"></i> Mostrar funcionários totais</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="feed-section p-3 bg-light border rounded">
+                <h3>Feed de Notícias - Inventário</h3>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="feed-item"><i class="bi-cart-plus-fill"></i> Novo equipamento adquirido</a>
+                    </li>
+                    <li><a href="#" class="feed-item"><i class="bi-tools-fill"></i> Item em manutenção</a></li>
+                    <li><a href="#" class="feed-item"><i class="bi-file-earmark-bar-graph-fill"></i> Relatório mensal
+                            disponível</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="feed-section p-3 bg-light border rounded">
+                <h3>Feed de Notícias - Financeiro</h3>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="feed-item"><i class="bi-cash-stack-fill"></i> Novo investimento realizado</a>
+                    </li>
+                    <li><a href="#" class="feed-item"><i class="bi-currency-dollar-fill"></i> Novo contrato assinado</a>
+                    </li>
+                    <li><a href="#" class="feed-item"><i class="bi-file-earmark-bar-chart-fill"></i> Relatório
+                            financeiro atualizado</a></li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    $('#modalEdit').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var id = button.data('id');
-        var name = button.data('name');
-        var email = button.data('email');
-        var phone = button.data('phone');
-
-        console.log(id, name, email, phone);  // Logging data to the console
-
-        $('#editId').val(id);
-        $('#editName').val(name);
-        $('#editEmail').val(email);
-        $('#editPhone').val(phone);
-    });
-
-    $(document).ready(function () {
-        $('#searchButton').click(function () {
-            var searchTerm = $('#searchField').val();
-            if (searchTerm) {
-                window.location.href = '/search?term=' + encodeURIComponent(searchTerm);
-            }
-        });
-    });
-</script>
 {% endblock %}
