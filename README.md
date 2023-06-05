@@ -11,25 +11,23 @@ O aplicativo usa dois modelos de banco de dados - `Funcionario` e `Setor`. Cada 
 
 O aplicativo possui várias rotas para realizar diferentes operações:
 
-1.  `/` - A rota raiz que renderiza a página principal do aplicativo.
-2.  `/login` - Uma rota POST que lida com o login do usuário.
-3.  `/painel` - A rota que renderiza o painel de controle do usuário.
-4.  `/insert` - Uma rota POST que lida com a inserção de um novo `Funcionario` no banco de dados.
-5.  `/update` - Uma rota POST que lida com a atualização dos detalhes de um `Funcionario` existente.
-6.  `/delete/<int:id>` - Uma rota que lida com a exclusão de um `Funcionario` do banco de dados.
-7.  `/search` - Uma rota que lida com a pesquisa de um `Funcionario`.
-8.  `/funcionarios` - Uma rota que renderiza a página com a lista de todos os `Funcionarios`.
-9.  `/gerar_pdf` - Uma rota que gera um PDF contendo a lista de todos os `Funcionarios`.
-
-
+-   `/` - A rota raiz que renderiza a página principal do aplicativo.
+-   `/login` - Uma rota POST que lida com o login do usuário.
+-   `/painel` - A rota que renderiza o painel de controle do usuário.
+-   `/insert` - Uma rota POST que lida com a inserção de um novo `Funcionario` no banco de dados.
+-   `/update` - Uma rota POST que lida com a atualização dos detalhes de um `Funcionario` existente.
+-   `/delete/<int:id>` - Uma rota que lida com a exclusão de um `Funcionario` do banco de dados.
+-   `/search` - Uma rota que lida com a pesquisa de um `Funcionario`.
+-   `/funcionarios` - Uma rota que renderiza a página com a lista de todos os `Funcionarios`.
+-   `/gerar_pdf` - Uma rota que gera um PDF contendo a lista de todos os `Funcionarios`.
 
 ## Como executar o aplicativo
 
 Para iniciar o aplicativo, você pode copiar e colar o seguinte comando no seu terminal:
 
-pythonCopy code
-
+python
 `python app.py` 
+
 
 ## Observações
 
