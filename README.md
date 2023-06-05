@@ -27,8 +27,9 @@ O aplicativo possui várias rotas para realizar diferentes operações:
 
 Para iniciar o aplicativo, você pode copiar e colar o seguinte comando no seu terminal:
 
-```python
-python app.py
+pythonCopy code
+
+`python app.py` 
 
 ## Observações
 
