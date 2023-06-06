@@ -3,15 +3,14 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/procedimentos.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}">
 
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 
-<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
 </html>
