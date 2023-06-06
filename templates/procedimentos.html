@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %} IMPACTO {% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Inventário, Manual de Procedimentos, Acervo de Conhecimentos e Tecnologia Operacional - IMPACTO</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="manual-nav">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico1">Tópico 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico2">Tópico 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico3">Tópico 3</a>
+                    </li>
+                    <!-- Resto dos tópicos -->
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="manual-container">
+                <h1>{{ funcionario }} lendo manual do {{ setor }}</h1>
+
+                <div class="search-bar">
+                    <input type="text" placeholder="Pesquisar tópico">
+                    <button type="button">Pesquisar</button>
+                </div>
+
+                <div id="topico1" class="manual-page">
+                    <h2>Tópico 1</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <img src="imagem1.jpg" alt="Imagem 1" class="img-fluid">
+                    <video src="video1.mp4" controls class="img-fluid mt-3"></video>
+                </div>
+
+                <div id="topico2" class="manual-page">
+                    <h2>Tópico 2</h2>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
+                    <img src="imagem2.jpg" alt="Imagem 2" class="img-fluid">
+                    <video src="video2.mp4" controls class="img-fluid mt-3"></video>
+                </div>
+
+                <div id="topico3" class="manual-page">
+                    <h2>Tópico 3</h2>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
+                    <img src="imagem3.jpg" alt="Imagem 3" class="img-fluid">
+                    <video src="video3.mp4" controls class="img-fluid mt-3"></video>
+                </div>
+
+                <!-- Resto dos tópicos -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <h2>Manual do {{ funcionario }} lendo manual do {{ setor }}</h2>
+    </div>
+</footer>
+
+{% endblock %}
