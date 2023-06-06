@@ -1,7 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, url_for, make_response
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_
+from sqlalchemy import or_, text
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Funcionario(db.Model):
-    __tablename__ = 'funcionarios'  # Nome correto da tabela
+    __tablename__ = 'funcionarios'
 
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
@@ -33,11 +33,25 @@ class Funcionario(db.Model):
     setor = db.relationship('Setor', backref=db.backref('funcionarios', lazy=True))
 
 class Setor(db.Model):
-    __tablename__ = 'setor'  # Nome correto da tabela
+    __tablename__ = 'setor'
 
     id = db.Column(db.Integer, primary_key=True)
     setor_nome = db.Column(db.String(45))
     departamento = db.Column(db.String(45))
+
+class Topico(db.Model):
+    __tablename__ = 'topicos'
+
+    id = db.Column(db.Integer, primary_key=True)
+    id_topico = db.Column(db.Integer, nullable=False)
+    conteudo_topicos = db.Column(db.Text)
+    imagem_url = db.Column(db.String(255))
+    video_url = db.Column(db.String(255))
+
+funcionarios_possui_manual = db.Table('funcionarios_possui_manual',
+    db.Column('funcionarios_id', db.Integer, db.ForeignKey('funcionarios.id')),
+    db.Column('topicos_id', db.Integer, db.ForeignKey('topicos.id'))
+)
 
 @app.route('/')
 def index():
@@ -138,26 +152,21 @@ def funcionarios():
 
 @app.route('/gerar_pdf')
 def gerar_pdf():
-    funcionarios = Funcionario.query.all()  # Obter a lista de funcionários do banco de dados
-    
-    # Cria uma lista de listas para a tabela
+    funcionarios = Funcionario.query.all()
+
     data = [["ID", "Nome", "Status", "Ramal", "Login", "Senha", "Nível de Permissão", "Setor ID"]]
     for funcionario in funcionarios:
         data.append([funcionario.id, funcionario.nome, funcionario.ativo, funcionario.ramal, funcionario.login, funcionario.senha, funcionario.nivel_permissao, funcionario.setor_id])
 
-    # Cria um arquivo PDF
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
 
-    # Adiciona o título ao PDF
     styles = getSampleStyleSheet()
     title = Paragraph("Inventário, Manual de Procedimentos, Acervo de Conhecimentos e Tecnologia Operacional - IMPACTO", styles["Title"])
     elems = [title]
 
-    # Cria a tabela
     table = Table(data)
     
-    # Aplica um estilo à tabela
     style = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -170,13 +179,10 @@ def gerar_pdf():
     ])
     table.setStyle(style)
 
-    # Adiciona a tabela ao PDF
     elems.append(table)
 
-    # Constrói o PDF
     doc.build(elems)
 
-    # Envia o PDF como resposta
     pdf_data = buffer.getvalue()
     buffer.close()
     response = make_response(pdf_data)
@@ -185,9 +191,38 @@ def gerar_pdf():
 
     return response
 
+@app.route('/consulta_procedimentos', methods=['GET'])
+def consulta_procedimentos():
+    setor_id = request.args.get('setor_id')
+    if setor_id is not None:
+        sql = text("""
+            SELECT f.nome, t.conteudo_topicos
+            FROM funcionarios f
+            JOIN funcionarios_possui_manual fm ON f.id = fm.funcionarios_id
+            JOIN topicos t ON fm.topicos_id = t.id
+            WHERE f.setor_id = :setor_id
+        """)
+        result = db.session.execute(sql, {'setor_id': setor_id})
+        funcionarios = [{"nome": row[0], "topico": row[1]} for row in result]
+        return render_template('consulta_procedimentos.html', funcionarios=funcionarios)
+    return "Setor não especificado."
 
-
-
+@app.route('/procedimentos', methods=['GET'])
+def procedimentos():
+    search_query = request.args.get('search_query')
+    if search_query is not None:
+        sql = text("""
+            SELECT t.conteudo_topicos
+            FROM topicos t
+            WHERE t.conteudo_topicos LIKE :search_query
+        """)
+        result = db.session.execute(sql, {'search_query': f"%{search_query}%"})
+    else:
+        sql = text("SELECT t.conteudo_topicos FROM topicos t")
+        result = db.session.execute(sql)
+        
+    topicos = [row[0] for row in result]
+    return render_template('procedimentos.html', topicos=topicos)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

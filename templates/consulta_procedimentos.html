@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}IMPACTO{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Consulta Manual</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome do Funcionário</th>
+                <th>Tópico</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for funcionario in funcionarios %}
+            <tr>
+                <td>{{ funcionario.nome }}</td>
+                <td>{{ funcionario.topico }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
