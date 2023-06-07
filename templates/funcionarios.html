@@ -30,7 +30,8 @@ Funcionários
                     <h2>
                         Gerenciar <b>Funcionários</b>
                     </h2>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAddFuncionario">Adicionar Funcionário</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal"
+                        data-target="#modalAddFuncionario">Adicionar Funcionário</button>
                 </div>
 
                 <!-- Adicione a barra de pesquisa aqui -->
@@ -68,10 +69,11 @@ Funcionários
                                 <td>{{ item.nivel_permissao }}</td>
                                 <td>{{ item.setor.setor_nome }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEdit"
-                                        data-id="{{ item.id }}" data-nome="{{ item.nome }}" data-ativo="{{ item.ativo }}"
-                                        data-ramal="{{ item.ramal }}" data-login="{{ item.login }}"
-                                        data-senha="{{ item.senha }}" data-nivel_permissao="{{ item.nivel_permissao }}"
+                                    <a href="#" class="btn btn-warning btn-xs" data-toggle="modal"
+                                        data-target="#modalEdit" data-id="{{ item.id }}" data-nome="{{ item.nome }}"
+                                        data-ativo="{{ item.ativo }}" data-ramal="{{ item.ramal }}"
+                                        data-login="{{ item.login }}" data-senha="{{ item.senha }}"
+                                        data-nivel_permissao="{{ item.nivel_permissao }}"
                                         data-setor_id="{{ item.setor_id }}">Editar</a>
                                     <a href="/delete/{{ item.id }}" class="btn btn-danger btn-xs"
                                         onclick="return confirm('Tem certeza que deseja apagar?')">Apagar</a>
@@ -81,7 +83,8 @@ Funcionários
                         </tbody>
                     </table>
 
-                    <a href="{{ url_for('gerar_pdf') }}" class="btn btn-primary" target="_blank">Gerar Relatório em PDF</a>
+                    <a href="{{ url_for('gerar_pdf') }}" class="btn btn-primary" target="_blank">Gerar Relatório em
+                        PDF</a>
                 </div>
 
                 <!-- Pagination -->
@@ -134,11 +137,13 @@ Funcionários
                                 </div>
                                 <div class="form-group">
                                     <label>Nível de Permissão:</label>
-                                    <input type="text" class="form-control" id="editNivel_permissao" name="nivel_permissao" required>
+                                    <input type="text" class="form-control" id="editNivel_permissao"
+                                        name="nivel_permissao" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Setor ID:</label>
-                                    <input type="number" class="form-control" id="editSetor_id" name="setor_id" required>
+                                    <input type="number" class="form-control" id="editSetor_id" name="setor_id"
+                                        required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Atualizar</button>
                             </form>
@@ -180,7 +185,8 @@ Funcionários
                                 </div>
                                 <div class="form-group">
                                     <label>Nível de Permissão:</label>
-                                    <input type="text" class="form-control" id="addNivel_permissao" name="nivel_permissao" required>
+                                    <input type="text" class="form-control" id="addNivel_permissao"
+                                        name="nivel_permissao" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Setor ID:</label>

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+{% block title %}IMPACTO{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container">
+    <div class="row">
+	
+        <div class="col-md-3">
+            <div class="manual-nav">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico1">Tópico 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico2">Tópico 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico3">Tópico 3</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico4">Tópico 4</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico5">Tópico 5</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico6">Tópico 6</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#topico7">Tópico 7</a>
+                    </li>
+                    <!-- Resto dos tópicos -->
+                </ul>
+            </div>
+        </div>
+		
+        <div class="col-md-9">
+            <div class="manual-container">
+                <h1>{{ funcionario }} lendo manual do {{ setor }}</h1>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Pesquisar tópico">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search"></i> Pesquisar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="topico1" class="manual-page">
+                    <h2>Tópico 1</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <img src="imagem1.jpg" alt="Imagem 1" class="img-fluid">
+                    <video src="video1.mp4" controls class="img-fluid mt-3"></video>
+                </div>
+
+                <div id="topico2" class="manual-page">
+                    <h2>Tópico 2</h2>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
+                    <img src="imagem2.jpg" alt="Imagem 2" class="img-fluid">
+                    <video src="video2.mp4" controls class="img-fluid mt-3"></video>
+                </div>
+
+                <div id="topico3" class="manual-page">
+                    <h2>Tópico 3</h2>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.
+                    </p>
+                    <img src="imagem3.jpg" alt="Imagem 3" class="img-fluid">
+                    <video src="video3.mp4" controls class="img-fluid mt-3"></video>
+                </div>
+
+                <!-- Resto dos tópicos -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
