@@ -1,12 +1,17 @@
 from flask import Flask, flash, redirect, render_template, request, url_for, make_response
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_, text
+from sqlalchemy import or_
+from sqlalchemy import text
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib import colors
+from flask_ckeditor import CKEditor
+
+
+
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -15,6 +20,9 @@ app.secret_key = "Secret Key"
 # Configurações do SQLAlchemy para a conexão com o banco de dados
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/empresa'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Instância do CKEditor
+ckeditor = CKEditor(app)
 
 db = SQLAlchemy(app)
 
@@ -28,30 +36,22 @@ class Funcionario(db.Model):
     login = db.Column(db.String(45))
     senha = db.Column(db.String(45))
     nivel_permissao = db.Column(db.Enum('Administrador', 'Usuário'))
-    setor_id = db.Column(db.Integer, db.ForeignKey('setor.id'), nullable=False)
+    funcao = db.Column(db.Integer, db.ForeignKey('setor_funcao.id'), nullable=False)
 
-    setor = db.relationship('Setor', backref=db.backref('funcionarios', lazy=True))
+    setor = db.relationship('SetorFuncao', backref=db.backref('funcionarios', lazy=True))
 
 class Setor(db.Model):
     __tablename__ = 'setor'
 
     id = db.Column(db.Integer, primary_key=True)
-    setor_nome = db.Column(db.String(45))
-    departamento = db.Column(db.String(45))
+    nome_setor = db.Column(db.String(45))
 
-class Topico(db.Model):
-    __tablename__ = 'topicos'
+class SetorFuncao(db.Model):
+    __tablename__ = 'setor_funcao'
 
     id = db.Column(db.Integer, primary_key=True)
-    id_topico = db.Column(db.Integer, nullable=False)
-    conteudo_topicos = db.Column(db.Text)
-    imagem_url = db.Column(db.String(255))
-    video_url = db.Column(db.String(255))
-
-funcionarios_possui_manual = db.Table('funcionarios_possui_manual',
-    db.Column('funcionarios_id', db.Integer, db.ForeignKey('funcionarios.id')),
-    db.Column('topicos_id', db.Integer, db.ForeignKey('topicos.id'))
-)
+    nome_funcao = db.Column(db.String(45))
+    setor_id = db.Column(db.Integer, db.ForeignKey('setor.id'), nullable=False)
 
 @app.route('/')
 def index():
@@ -81,10 +81,10 @@ def insert():
         login = request.form['login']
         senha = request.form['senha']
         nivel_permissao = request.form['nivel_permissao']
-        setor_id = request.form['setor_id']
+        funcao = request.form['funcao']
 
         funcionario = Funcionario(nome=nome, ativo=ativo, ramal=ramal, login=login, senha=senha,
-                                  nivel_permissao=nivel_permissao, setor_id=setor_id)
+                                  nivel_permissao=nivel_permissao, funcao=funcao)
         db.session.add(funcionario)
         db.session.commit()
 
@@ -103,7 +103,7 @@ def update():
         login = request.form['login']
         senha = request.form['senha']
         nivel_permissao = request.form['nivel_permissao']
-        setor_id = request.form['setor_id']
+        funcao = request.form['funcao']
 
         funcionario = Funcionario.query.get(id)
         if funcionario:
@@ -113,7 +113,7 @@ def update():
             funcionario.login = login
             funcionario.senha = senha
             funcionario.nivel_permissao = nivel_permissao
-            funcionario.setor_id = setor_id
+            funcionario.funcao = funcao
 
             db.session.commit()
             flash('Funcionário atualizado com sucesso!', 'success')
@@ -154,9 +154,9 @@ def funcionarios():
 def gerar_pdf():
     funcionarios = Funcionario.query.all()
 
-    data = [["ID", "Nome", "Status", "Ramal", "Login", "Senha", "Nível de Permissão", "Setor ID"]]
+    data = [["ID", "Nome", "Status", "Ramal", "Login", "Senha", "Nível de Permissão", "Função"]]
     for funcionario in funcionarios:
-        data.append([funcionario.id, funcionario.nome, funcionario.ativo, funcionario.ramal, funcionario.login, funcionario.senha, funcionario.nivel_permissao, funcionario.setor_id])
+        data.append([funcionario.id, funcionario.nome, funcionario.ativo, funcionario.ramal, funcionario.login, funcionario.senha, funcionario.nivel_permissao, funcionario.funcao])
 
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter)
@@ -193,16 +193,16 @@ def gerar_pdf():
 
 @app.route('/consulta_procedimentos', methods=['GET'])
 def consulta_procedimentos():
-    setor_id = request.args.get('setor_id')
-    if setor_id is not None:
+    funcao = request.args.get('funcao')
+    if funcao is not None:
         sql = text("""
-            SELECT f.nome, t.conteudo_topicos
+            SELECT f.nome, t.conteudo
             FROM funcionarios f
             JOIN funcionarios_possui_manual fm ON f.id = fm.funcionarios_id
-            JOIN topicos t ON fm.topicos_id = t.id
-            WHERE f.setor_id = :setor_id
+            JOIN topico t ON fm.topicos_id = t.id
+            WHERE f.funcao = :funcao
         """)
-        result = db.session.execute(sql, {'setor_id': setor_id})
+        result = db.session.execute(sql, {'funcao': funcao})
         funcionarios = [{"nome": row[0], "topico": row[1]} for row in result]
         return render_template('consulta_procedimentos.html', funcionarios=funcionarios)
     return "Setor não especificado."
@@ -212,17 +212,27 @@ def procedimentos():
     search_query = request.args.get('search_query')
     if search_query is not None:
         sql = text("""
-            SELECT t.conteudo_topicos
-            FROM topicos t
-            WHERE t.conteudo_topicos LIKE :search_query
+            SELECT t.conteudo
+            FROM topico t
+            WHERE t.conteudo LIKE :search_query
         """)
         result = db.session.execute(sql, {'search_query': f"%{search_query}%"})
     else:
-        sql = text("SELECT t.conteudo_topicos FROM topicos t")
+        sql = text("SELECT t.conteudo FROM topico t")
         result = db.session.execute(sql)
         
     topicos = [row[0] for row in result]
     return render_template('procedimentos.html', topicos=topicos)
 
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(debug=True)
