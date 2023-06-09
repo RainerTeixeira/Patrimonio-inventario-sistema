@@ -191,21 +191,7 @@ def gerar_pdf():
 
     return response
 
-@app.route('/consulta_procedimentos', methods=['GET'])
-def consulta_procedimentos():
-    funcao = request.args.get('funcao')
-    if funcao is not None:
-        sql = text("""
-            SELECT f.nome, t.conteudo
-            FROM funcionarios f
-            JOIN funcionarios_possui_manual fm ON f.id = fm.funcionarios_id
-            JOIN topico t ON fm.topicos_id = t.id
-            WHERE f.funcao = :funcao
-        """)
-        result = db.session.execute(sql, {'funcao': funcao})
-        funcionarios = [{"nome": row[0], "topico": row[1]} for row in result]
-        return render_template('consulta_procedimentos.html', funcionarios=funcionarios)
-    return "Setor não especificado."
+
 
 @app.route('/procedimentos', methods=['GET'])
 def procedimentos():
