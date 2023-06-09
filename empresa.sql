@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07/06/2023 às 19:31
+-- Tempo de geração: 09-Jun-2023 às 06:11
 -- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `alarmes`
+-- Estrutura da tabela `alarmes`
 --
 
 CREATE TABLE `alarmes` (
@@ -35,7 +35,7 @@ CREATE TABLE `alarmes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `alarmes`
+-- Extraindo dados da tabela `alarmes`
 --
 
 INSERT INTO `alarmes` (`id`, `nome`, `localizacao_fisica`, `descricao`) VALUES
@@ -44,7 +44,7 @@ INSERT INTO `alarmes` (`id`, `nome`, `localizacao_fisica`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `banco_dados`
+-- Estrutura da tabela `banco_dados`
 --
 
 CREATE TABLE `banco_dados` (
@@ -56,7 +56,7 @@ CREATE TABLE `banco_dados` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `banco_dados`
+-- Extraindo dados da tabela `banco_dados`
 --
 
 INSERT INTO `banco_dados` (`id`, `software_licenciado`, `banco_nome`, `tipo`, `versao`) VALUES
@@ -65,7 +65,7 @@ INSERT INTO `banco_dados` (`id`, `software_licenciado`, `banco_nome`, `tipo`, `v
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cameras`
+-- Estrutura da tabela `cameras`
 --
 
 CREATE TABLE `cameras` (
@@ -75,7 +75,7 @@ CREATE TABLE `cameras` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `cameras`
+-- Extraindo dados da tabela `cameras`
 --
 
 INSERT INTO `cameras` (`id`, `marca_modelo`, `localizacao_fisica`) VALUES
@@ -87,7 +87,7 @@ INSERT INTO `cameras` (`id`, `marca_modelo`, `localizacao_fisica`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `chave_alarme`
+-- Estrutura da tabela `chave_alarme`
 --
 
 CREATE TABLE `chave_alarme` (
@@ -100,7 +100,7 @@ CREATE TABLE `chave_alarme` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `chave_alarme`
+-- Extraindo dados da tabela `chave_alarme`
 --
 
 INSERT INTO `chave_alarme` (`id`, `senha`, `chave`, `local_chave`, `funcionarios_id`, `alarmes_id`) VALUES
@@ -109,7 +109,7 @@ INSERT INTO `chave_alarme` (`id`, `senha`, `chave`, `local_chave`, `funcionarios
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `coletor`
+-- Estrutura da tabela `coletor`
 --
 
 CREATE TABLE `coletor` (
@@ -121,7 +121,7 @@ CREATE TABLE `coletor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `coletor`
+-- Extraindo dados da tabela `coletor`
 --
 
 INSERT INTO `coletor` (`id`, `observacao`, `SNID`, `modelo`, `data_compra`) VALUES
@@ -130,7 +130,7 @@ INSERT INTO `coletor` (`id`, `observacao`, `SNID`, `modelo`, `data_compra`) VALU
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `componentes_rede`
+-- Estrutura da tabela `componentes_rede`
 --
 
 CREATE TABLE `componentes_rede` (
@@ -146,7 +146,7 @@ CREATE TABLE `componentes_rede` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `componentes_rede`
+-- Extraindo dados da tabela `componentes_rede`
 --
 
 INSERT INTO `componentes_rede` (`id`, `computador_id`, `impressora_id`, `cameras_id`, `roteador_switches_id`, `servidores_id`, `descricao_componente`, `endereco_ip`, `localizacao_fisica`) VALUES
@@ -155,7 +155,7 @@ INSERT INTO `componentes_rede` (`id`, `computador_id`, `impressora_id`, `cameras
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `computador`
+-- Estrutura da tabela `computador`
 --
 
 CREATE TABLE `computador` (
@@ -174,7 +174,7 @@ CREATE TABLE `computador` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `computador`
+-- Extraindo dados da tabela `computador`
 --
 
 INSERT INTO `computador` (`id`, `funcionarios_id`, `marca_modelo`, `placa_mae`, `processador`, `soquete`, `hd`, `Possui_ssd`, `memoria`, `SNID`, `software_licenciado`, `host_name`) VALUES
@@ -183,7 +183,7 @@ INSERT INTO `computador` (`id`, `funcionarios_id`, `marca_modelo`, `placa_mae`, 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `dispositivos_moveis`
+-- Estrutura da tabela `dispositivos_moveis`
 --
 
 CREATE TABLE `dispositivos_moveis` (
@@ -198,7 +198,7 @@ CREATE TABLE `dispositivos_moveis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `dispositivos_moveis`
+-- Extraindo dados da tabela `dispositivos_moveis`
 --
 
 INSERT INTO `dispositivos_moveis` (`id`, `funcionarios_id`, `pacote_serviços_id`, `data_obeteve`, `data_entregou`, `marca_modelo`, `IMEI`, `dispositivo`) VALUES
@@ -207,7 +207,7 @@ INSERT INTO `dispositivos_moveis` (`id`, `funcionarios_id`, `pacote_serviços_id
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `emails`
+-- Estrutura da tabela `emails`
 --
 
 CREATE TABLE `emails` (
@@ -216,7 +216,7 @@ CREATE TABLE `emails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `emails`
+-- Extraindo dados da tabela `emails`
 --
 
 INSERT INTO `emails` (`id`, `endereco`) VALUES
@@ -225,7 +225,7 @@ INSERT INTO `emails` (`id`, `endereco`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `funcionarios`
+-- Estrutura da tabela `funcionarios`
 --
 
 CREATE TABLE `funcionarios` (
@@ -236,21 +236,22 @@ CREATE TABLE `funcionarios` (
   `login` varchar(45) DEFAULT NULL,
   `senha` varchar(45) DEFAULT NULL,
   `nivel_permissao` enum('Administrador','Usuário') DEFAULT NULL,
-  `setor_id` int(11) NOT NULL
+  `funcao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `funcionarios`
+-- Extraindo dados da tabela `funcionarios`
 --
 
-INSERT INTO `funcionarios` (`id`, `nome`, `ativo`, `ramal`, `login`, `senha`, `nivel_permissao`, `setor_id`) VALUES
+INSERT INTO `funcionarios` (`id`, `nome`, `ativo`, `ramal`, `login`, `senha`, `nivel_permissao`, `funcao`) VALUES
 (1, 'Rainer Teixeira', 'Ativo', 22644, 'Rainer', '98152749', 'Administrador', 1),
-(5, 'pedro alves cabral', 'Ativo', 433, 'pedro', 'pedro', 'Administrador', 3);
+(2, 'pedro alves cabral', 'Ativo', 433, 'pedro', 'pedro', 'Administrador', 3),
+(3, 'admin', 'Ativo', 11, 'admin', 'admin', 'Administrador', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `funcionarios_emails`
+-- Estrutura da tabela `funcionarios_emails`
 --
 
 CREATE TABLE `funcionarios_emails` (
@@ -260,7 +261,7 @@ CREATE TABLE `funcionarios_emails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `funcionarios_emails`
+-- Extraindo dados da tabela `funcionarios_emails`
 --
 
 INSERT INTO `funcionarios_emails` (`id`, `funcionarios_id`, `emails_id`) VALUES
@@ -269,7 +270,7 @@ INSERT INTO `funcionarios_emails` (`id`, `funcionarios_id`, `emails_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `funcionarios_possui_coletor`
+-- Estrutura da tabela `funcionarios_possui_coletor`
 --
 
 CREATE TABLE `funcionarios_possui_coletor` (
@@ -281,7 +282,7 @@ CREATE TABLE `funcionarios_possui_coletor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `funcionarios_possui_coletor`
+-- Extraindo dados da tabela `funcionarios_possui_coletor`
 --
 
 INSERT INTO `funcionarios_possui_coletor` (`id`, `coletor_id`, `funcionarios_id`, `data_saida`, `data_entrada`) VALUES
@@ -290,26 +291,19 @@ INSERT INTO `funcionarios_possui_coletor` (`id`, `coletor_id`, `funcionarios_id`
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `funcionarios_possui_manual`
+-- Estrutura da tabela `imagem_topicos`
 --
 
-CREATE TABLE `funcionarios_possui_manual` (
-  `funcionarios_id` int(11) NOT NULL,
-  `topicos_id` int(11) NOT NULL
+CREATE TABLE `imagem_topicos` (
+  `id` int(11) NOT NULL,
+  `url` varchar(200) DEFAULT NULL,
+  `topico_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `funcionarios_possui_manual`
---
-
-INSERT INTO `funcionarios_possui_manual` (`funcionarios_id`, `topicos_id`) VALUES
-(1, 1),
-(1, 2);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `impressora`
+-- Estrutura da tabela `impressora`
 --
 
 CREATE TABLE `impressora` (
@@ -322,7 +316,7 @@ CREATE TABLE `impressora` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `impressora`
+-- Extraindo dados da tabela `impressora`
 --
 
 INSERT INTO `impressora` (`id`, `marca_modelo`, `tipo`, `localizacao_fisica`, `funciona`, `impressoracol`) VALUES
@@ -331,7 +325,7 @@ INSERT INTO `impressora` (`id`, `marca_modelo`, `tipo`, `localizacao_fisica`, `f
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `licencas_software`
+-- Estrutura da tabela `licencas_software`
 --
 
 CREATE TABLE `licencas_software` (
@@ -345,7 +339,7 @@ CREATE TABLE `licencas_software` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `licencas_software`
+-- Extraindo dados da tabela `licencas_software`
 --
 
 INSERT INTO `licencas_software` (`id`, `servidores_id`, `computador_id`, `banco_dados_id`, `decricao_licenca`, `numero_licenca`, `validade`) VALUES
@@ -354,27 +348,55 @@ INSERT INTO `licencas_software` (`id`, `servidores_id`, `computador_id`, `banco_
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `manual_possui_topico`
+-- Estrutura da tabela `manual`
 --
 
-CREATE TABLE `manual_possui_topico` (
+CREATE TABLE `manual` (
   `id` int(11) NOT NULL,
-  `titulo` varchar(100) DEFAULT NULL,
-  `topicos_id` int(11) DEFAULT NULL
+  `nome` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `manual_possui_topico`
+-- Extraindo dados da tabela `manual`
 --
 
-INSERT INTO `manual_possui_topico` (`id`, `titulo`, `topicos_id`) VALUES
-(1, 'Manual TI', 1),
-(2, 'RH', 1);
+INSERT INTO `manual` (`id`, `nome`) VALUES
+(1, 'Manual TI'),
+(2, 'Manual COMPRAS'),
+(3, 'Manual FATURAMENTO'),
+(4, 'Manual RH'),
+(5, 'Manual ESTOQUE');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `mesa_cadeira`
+-- Estrutura da tabela `manual_permisao`
+--
+
+CREATE TABLE `manual_permisao` (
+  `manual_id` int(11) NOT NULL,
+  `setor_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `manual_permisao`
+--
+
+INSERT INTO `manual_permisao` (`manual_id`, `setor_id`) VALUES
+(1, 1),
+(2, 1),
+(2, 2),
+(3, 1),
+(3, 3),
+(4, 4),
+(4, 5),
+(5, 1),
+(5, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mesa_cadeira`
 --
 
 CREATE TABLE `mesa_cadeira` (
@@ -386,7 +408,7 @@ CREATE TABLE `mesa_cadeira` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `mesa_cadeira`
+-- Extraindo dados da tabela `mesa_cadeira`
 --
 
 INSERT INTO `mesa_cadeira` (`id`, `descricao`, `etiqueta_Inventário_mesa`, `etiqueta_Inventário_cadeira`, `funcionarios_id`) VALUES
@@ -395,7 +417,7 @@ INSERT INTO `mesa_cadeira` (`id`, `descricao`, `etiqueta_Inventário_mesa`, `eti
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `pacote_serviços`
+-- Estrutura da tabela `pacote_serviços`
 --
 
 CREATE TABLE `pacote_serviços` (
@@ -406,7 +428,7 @@ CREATE TABLE `pacote_serviços` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `pacote_serviços`
+-- Extraindo dados da tabela `pacote_serviços`
 --
 
 INSERT INTO `pacote_serviços` (`id`, `descricao`, `valor`, `numero_telefone`) VALUES
@@ -415,7 +437,7 @@ INSERT INTO `pacote_serviços` (`id`, `descricao`, `valor`, `numero_telefone`) V
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `projeto`
+-- Estrutura da tabela `projeto`
 --
 
 CREATE TABLE `projeto` (
@@ -428,7 +450,7 @@ CREATE TABLE `projeto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `projeto`
+-- Extraindo dados da tabela `projeto`
 --
 
 INSERT INTO `projeto` (`id`, `nome`, `status`, `data_inicio`, `data_fim`, `projeto_descricao`) VALUES
@@ -437,7 +459,7 @@ INSERT INTO `projeto` (`id`, `nome`, `status`, `data_inicio`, `data_fim`, `proje
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `projeto_execucao`
+-- Estrutura da tabela `projeto_execucao`
 --
 
 CREATE TABLE `projeto_execucao` (
@@ -447,7 +469,7 @@ CREATE TABLE `projeto_execucao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `projeto_execucao`
+-- Extraindo dados da tabela `projeto_execucao`
 --
 
 INSERT INTO `projeto_execucao` (`id`, `funcionarios_id`, `projeto_id`) VALUES
@@ -456,7 +478,7 @@ INSERT INTO `projeto_execucao` (`id`, `funcionarios_id`, `projeto_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `racks`
+-- Estrutura da tabela `racks`
 --
 
 CREATE TABLE `racks` (
@@ -470,7 +492,7 @@ CREATE TABLE `racks` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `roteador_switches`
+-- Estrutura da tabela `roteador_switches`
 --
 
 CREATE TABLE `roteador_switches` (
@@ -480,7 +502,7 @@ CREATE TABLE `roteador_switches` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `roteador_switches`
+-- Extraindo dados da tabela `roteador_switches`
 --
 
 INSERT INTO `roteador_switches` (`id`, `modelo_equipamento`, `SNID`) VALUES
@@ -489,7 +511,7 @@ INSERT INTO `roteador_switches` (`id`, `modelo_equipamento`, `SNID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `sensores`
+-- Estrutura da tabela `sensores`
 --
 
 CREATE TABLE `sensores` (
@@ -499,7 +521,7 @@ CREATE TABLE `sensores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `sensores`
+-- Extraindo dados da tabela `sensores`
 --
 
 INSERT INTO `sensores` (`id`, `alarmes_id`, `local`) VALUES
@@ -510,7 +532,7 @@ INSERT INTO `sensores` (`id`, `alarmes_id`, `local`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `servidores`
+-- Estrutura da tabela `servidores`
 --
 
 CREATE TABLE `servidores` (
@@ -528,7 +550,7 @@ CREATE TABLE `servidores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `servidores`
+-- Extraindo dados da tabela `servidores`
 --
 
 INSERT INTO `servidores` (`id`, `nome_servidor`, `marca_modelo`, `placa_mae`, `processador`, `soquete`, `hd`, `memoria`, `SNID`, `banco_dados_id`, `possui_ssd`) VALUES
@@ -537,55 +559,70 @@ INSERT INTO `servidores` (`id`, `nome_servidor`, `marca_modelo`, `placa_mae`, `p
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `setor`
+-- Estrutura da tabela `setor`
 --
 
 CREATE TABLE `setor` (
   `id` int(11) NOT NULL,
-  `setor_nome` varchar(45) DEFAULT NULL,
-  `departamento` varchar(45) DEFAULT NULL
+  `nome_setor` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `setor`
+-- Extraindo dados da tabela `setor`
 --
 
-INSERT INTO `setor` (`id`, `setor_nome`, `departamento`) VALUES
-(1, 'Analista de Sistemas', 'Tecnologia Da Informação'),
-(2, 'Marketing', 'Vendas Externas'),
-(3, 'Recursos Humanos', 'Marketing Digital');
+INSERT INTO `setor` (`id`, `nome_setor`) VALUES
+(1, 'Tecnologia da informação'),
+(2, 'Compras'),
+(3, 'Financeiro'),
+(4, 'Vendas'),
+(5, 'RH');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `topicos`
+-- Estrutura da tabela `setor_funcao`
 --
 
-CREATE TABLE `topicos` (
+CREATE TABLE `setor_funcao` (
   `id` int(11) NOT NULL,
-  `id_topico` int(11) NOT NULL,
-  `conteudo_topicos` text DEFAULT NULL,
-  `imagem_url` varchar(255) DEFAULT NULL,
-  `video_url` varchar(255) DEFAULT NULL
+  `nome_funcao` varchar(45) DEFAULT NULL,
+  `setor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `topicos`
---
-
-INSERT INTO `topicos` (`id`, `id_topico`, `conteudo_topicos`, `imagem_url`, `video_url`) VALUES
-(1, 1, '1) Alterar ambiente para Innovus', NULL, NULL),
-(2, 1, '2) Menu Utilitários; ', NULL, NULL),
-(3, 1, '3) Exportações; ', NULL, NULL),
-(4, 1, '4) Em “Selecione a Exportação”, selecione EMPRESA ', NULL, NULL),
-(5, 1, '5) Informe em Período de, a data do dia atual caso o dia anterior tenha sido útil (caso contrário, informe a data do dia anterior); ', NULL, NULL),
-(6, 1, '6) Informe em Até a data atual; ', NULL, NULL),
-(7, 1, '7) Processar. ', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `uniforme`
+-- Estrutura da tabela `topico`
+--
+
+CREATE TABLE `topico` (
+  `id` int(11) NOT NULL,
+  `manual_id` int(11) NOT NULL,
+  `titulo` varchar(45) DEFAULT NULL,
+  `conteudo` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `topico`
+--
+
+INSERT INTO `topico` (`id`, `manual_id`, `titulo`, `conteudo`) VALUES
+(1, 1, 'Como alterar o IP', 'Conteúdo do tópico 1 '),
+(2, 1, 'Como formatar', 'Conteúdo do tópico 2'),
+(3, 1, 'como resetar impressora', 'Conteúdo do tópico 3'),
+(4, 1, 'Carga Média Tributária', 'Acessar o site: https://deolhonoimposto.ibpt.org.br/ <br>'),
+(5, 2, 'Instalação do Onclick no notebook (modo servi', 'Conteúdo do tópico 1 '),
+(6, 2, 'como cadastrar no sistema', 'Conteúdo do tópico 2'),
+(7, 2, 'como fazer XMLs', 'Conteúdo do tópico 3'),
+(8, 3, 'como faturar nota fiscal', 'Conteúdo do tópico 1 '),
+(9, 4, 'como cadastrar funcionario', 'Conteúdo do tópico 1 '),
+(10, 5, 'como dar entrada produto', 'Conteúdo do tópico 1 ');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `uniforme`
 --
 
 CREATE TABLE `uniforme` (
@@ -596,7 +633,7 @@ CREATE TABLE `uniforme` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `uniforme`
+-- Extraindo dados da tabela `uniforme`
 --
 
 INSERT INTO `uniforme` (`id`, `tamanho`, `tipo`, `quantidade_disponivel`) VALUES
@@ -607,7 +644,7 @@ INSERT INTO `uniforme` (`id`, `tamanho`, `tipo`, `quantidade_disponivel`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `uniforme_dos_funcionarios`
+-- Estrutura da tabela `uniforme_dos_funcionarios`
 --
 
 CREATE TABLE `uniforme_dos_funcionarios` (
@@ -619,7 +656,7 @@ CREATE TABLE `uniforme_dos_funcionarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `uniforme_dos_funcionarios`
+-- Extraindo dados da tabela `uniforme_dos_funcionarios`
 --
 
 INSERT INTO `uniforme_dos_funcionarios` (`id`, `uniforme_id`, `uniforme_tamanho`, `funcionarios_id`, `data_entrega`) VALUES
@@ -628,7 +665,7 @@ INSERT INTO `uniforme_dos_funcionarios` (`id`, `uniforme_id`, `uniforme_tamanho`
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `veiculos`
+-- Estrutura da tabela `veiculos`
 --
 
 CREATE TABLE `veiculos` (
@@ -640,49 +677,72 @@ CREATE TABLE `veiculos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `veiculos`
+-- Extraindo dados da tabela `veiculos`
 --
 
 INSERT INTO `veiculos` (`id`, `funcionarios_id`, `placa`, `modelo`, `ano`) VALUES
 (1, NULL, 'LKK-78', 'Gol 1.6 ', '2022');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `video_topicos`
+--
+
+CREATE TABLE `video_topicos` (
+  `id` int(11) NOT NULL,
+  `url` varchar(200) DEFAULT NULL,
+  `topico_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `video_topicos`
+--
+
+INSERT INTO `video_topicos` (`id`, `url`, `topico_id`) VALUES
+(1, 'www.example.com/imagens/imagem1.jpg ', 1),
+(2, 'www.example.com/imagens/imagem2.jpg ', 1),
+(3, 'www.example.com/imagens/imagem3.jpg ', 2),
+(4, 'www.example.com/imagens/imagem4.jpg ', 3),
+(5, 'www.example.com/imagens/imagem5.jpg ', 4);
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `alarmes`
+-- Índices para tabela `alarmes`
 --
 ALTER TABLE `alarmes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `banco_dados`
+-- Índices para tabela `banco_dados`
 --
 ALTER TABLE `banco_dados`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `cameras`
+-- Índices para tabela `cameras`
 --
 ALTER TABLE `cameras`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `chave_alarme`
+-- Índices para tabela `chave_alarme`
 --
 ALTER TABLE `chave_alarme`
   ADD KEY `fk_sdsdd_funcionarios1` (`funcionarios_id`),
   ADD KEY `fk_chave_alarme_alarmes1` (`alarmes_id`);
 
 --
--- Índices de tabela `coletor`
+-- Índices para tabela `coletor`
 --
 ALTER TABLE `coletor`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `componentes_rede`
+-- Índices para tabela `componentes_rede`
 --
 ALTER TABLE `componentes_rede`
   ADD PRIMARY KEY (`id`),
@@ -693,14 +753,14 @@ ALTER TABLE `componentes_rede`
   ADD KEY `fk_componentes_rede_servidores1` (`servidores_id`);
 
 --
--- Índices de tabela `computador`
+-- Índices para tabela `computador`
 --
 ALTER TABLE `computador`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_computador_funcionarios1` (`funcionarios_id`);
 
 --
--- Índices de tabela `dispositivos_moveis`
+-- Índices para tabela `dispositivos_moveis`
 --
 ALTER TABLE `dispositivos_moveis`
   ADD PRIMARY KEY (`id`),
@@ -708,20 +768,19 @@ ALTER TABLE `dispositivos_moveis`
   ADD KEY `fk_dispositivos_moveis_pacote_serviços1` (`pacote_serviços_id`);
 
 --
--- Índices de tabela `emails`
+-- Índices para tabela `emails`
 --
 ALTER TABLE `emails`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `funcionarios`
+-- Índices para tabela `funcionarios`
 --
 ALTER TABLE `funcionarios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_funcionarios_setor1` (`setor_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `funcionarios_emails`
+-- Índices para tabela `funcionarios_emails`
 --
 ALTER TABLE `funcionarios_emails`
   ADD PRIMARY KEY (`id`,`funcionarios_id`,`emails_id`),
@@ -729,7 +788,7 @@ ALTER TABLE `funcionarios_emails`
   ADD KEY `fk_funcionarios_has_emails_emails1` (`emails_id`);
 
 --
--- Índices de tabela `funcionarios_possui_coletor`
+-- Índices para tabela `funcionarios_possui_coletor`
 --
 ALTER TABLE `funcionarios_possui_coletor`
   ADD PRIMARY KEY (`id`,`coletor_id`,`funcionarios_id`),
@@ -737,19 +796,20 @@ ALTER TABLE `funcionarios_possui_coletor`
   ADD KEY `fk_funcionarios_has_coletor_coletor1` (`coletor_id`);
 
 --
--- Índices de tabela `funcionarios_possui_manual`
+-- Índices para tabela `imagem_topicos`
 --
-ALTER TABLE `funcionarios_possui_manual`
-  ADD PRIMARY KEY (`funcionarios_id`,`topicos_id`);
+ALTER TABLE `imagem_topicos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_imagem_topico1` (`topico_id`);
 
 --
--- Índices de tabela `impressora`
+-- Índices para tabela `impressora`
 --
 ALTER TABLE `impressora`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `licencas_software`
+-- Índices para tabela `licencas_software`
 --
 ALTER TABLE `licencas_software`
   ADD PRIMARY KEY (`id`),
@@ -758,33 +818,39 @@ ALTER TABLE `licencas_software`
   ADD KEY `fk_licencas_software_banco_dados1` (`banco_dados_id`);
 
 --
--- Índices de tabela `manual_possui_topico`
+-- Índices para tabela `manual`
 --
-ALTER TABLE `manual_possui_topico`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_funcionarios_possui_topicos_topicos1` (`topicos_id`) USING BTREE;
+ALTER TABLE `manual`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `mesa_cadeira`
+-- Índices para tabela `manual_permisao`
+--
+ALTER TABLE `manual_permisao`
+  ADD PRIMARY KEY (`manual_id`,`setor_id`),
+  ADD KEY `fk_permisao_setor` (`setor_id`);
+
+--
+-- Índices para tabela `mesa_cadeira`
 --
 ALTER TABLE `mesa_cadeira`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_mesa_cadeira_funcionarios1` (`funcionarios_id`);
 
 --
--- Índices de tabela `pacote_serviços`
+-- Índices para tabela `pacote_serviços`
 --
 ALTER TABLE `pacote_serviços`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `projeto`
+-- Índices para tabela `projeto`
 --
 ALTER TABLE `projeto`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `projeto_execucao`
+-- Índices para tabela `projeto_execucao`
 --
 ALTER TABLE `projeto_execucao`
   ADD PRIMARY KEY (`id`,`funcionarios_id`,`projeto_id`),
@@ -792,7 +858,7 @@ ALTER TABLE `projeto_execucao`
   ADD KEY `fk_funcionarios_has_projeto_projeto1` (`projeto_id`);
 
 --
--- Índices de tabela `racks`
+-- Índices para tabela `racks`
 --
 ALTER TABLE `racks`
   ADD PRIMARY KEY (`id`),
@@ -800,44 +866,52 @@ ALTER TABLE `racks`
   ADD KEY `fk_racks_servidores1` (`servidores_id`);
 
 --
--- Índices de tabela `roteador_switches`
+-- Índices para tabela `roteador_switches`
 --
 ALTER TABLE `roteador_switches`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `sensores`
+-- Índices para tabela `sensores`
 --
 ALTER TABLE `sensores`
   ADD PRIMARY KEY (`alarmes_id`,`id`);
 
 --
--- Índices de tabela `servidores`
+-- Índices para tabela `servidores`
 --
 ALTER TABLE `servidores`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_servidores_banco_dados1` (`banco_dados_id`);
 
 --
--- Índices de tabela `setor`
+-- Índices para tabela `setor`
 --
 ALTER TABLE `setor`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `topicos`
+-- Índices para tabela `setor_funcao`
 --
-ALTER TABLE `topicos`
-  ADD PRIMARY KEY (`id_topico`,`id`);
+ALTER TABLE `setor_funcao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_setor_funcao_setor1` (`setor_id`);
 
 --
--- Índices de tabela `uniforme`
+-- Índices para tabela `topico`
+--
+ALTER TABLE `topico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_topico_manual1` (`manual_id`);
+
+--
+-- Índices para tabela `uniforme`
 --
 ALTER TABLE `uniforme`
   ADD PRIMARY KEY (`id`,`tamanho`);
 
 --
--- Índices de tabela `uniforme_dos_funcionarios`
+-- Índices para tabela `uniforme_dos_funcionarios`
 --
 ALTER TABLE `uniforme_dos_funcionarios`
   ADD PRIMARY KEY (`id`,`uniforme_id`,`uniforme_tamanho`,`funcionarios_id`),
@@ -845,14 +919,21 @@ ALTER TABLE `uniforme_dos_funcionarios`
   ADD KEY `fk_uniforme_has_funcionarios_funcionarios1` (`funcionarios_id`);
 
 --
--- Índices de tabela `veiculos`
+-- Índices para tabela `veiculos`
 --
 ALTER TABLE `veiculos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_veiculos_funcionarios1` (`funcionarios_id`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- Índices para tabela `video_topicos`
+--
+ALTER TABLE `video_topicos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_video_topico1` (`topico_id`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -907,7 +988,7 @@ ALTER TABLE `emails`
 -- AUTO_INCREMENT de tabela `funcionarios`
 --
 ALTER TABLE `funcionarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `funcionarios_emails`
@@ -922,6 +1003,12 @@ ALTER TABLE `funcionarios_possui_coletor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de tabela `imagem_topicos`
+--
+ALTER TABLE `imagem_topicos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `impressora`
 --
 ALTER TABLE `impressora`
@@ -932,6 +1019,12 @@ ALTER TABLE `impressora`
 --
 ALTER TABLE `licencas_software`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `manual`
+--
+ALTER TABLE `manual`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `mesa_cadeira`
@@ -979,7 +1072,13 @@ ALTER TABLE `servidores`
 -- AUTO_INCREMENT de tabela `setor`
 --
 ALTER TABLE `setor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `topico`
+--
+ALTER TABLE `topico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `veiculos`
@@ -988,18 +1087,24 @@ ALTER TABLE `veiculos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Restrições para tabelas despejadas
+-- AUTO_INCREMENT de tabela `video_topicos`
+--
+ALTER TABLE `video_topicos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `chave_alarme`
+-- Limitadores para a tabela `chave_alarme`
 --
 ALTER TABLE `chave_alarme`
   ADD CONSTRAINT `fk_chave_alarme_alarmes1` FOREIGN KEY (`alarmes_id`) REFERENCES `alarmes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_sdsdd_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `componentes_rede`
+-- Limitadores para a tabela `componentes_rede`
 --
 ALTER TABLE `componentes_rede`
   ADD CONSTRAINT `fk_componentes_rede_cameras1` FOREIGN KEY (`cameras_id`) REFERENCES `cameras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1009,46 +1114,46 @@ ALTER TABLE `componentes_rede`
   ADD CONSTRAINT `fk_componentes_rede_servidores1` FOREIGN KEY (`servidores_id`) REFERENCES `servidores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `computador`
+-- Limitadores para a tabela `computador`
 --
 ALTER TABLE `computador`
   ADD CONSTRAINT `fk_computador_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `dispositivos_moveis`
+-- Limitadores para a tabela `dispositivos_moveis`
 --
 ALTER TABLE `dispositivos_moveis`
   ADD CONSTRAINT `fk_dispositivos_moveis_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_dispositivos_moveis_pacote_serviços1` FOREIGN KEY (`pacote_serviços_id`) REFERENCES `pacote_serviços` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `funcionarios`
+-- Limitadores para a tabela `funcionarios`
 --
 ALTER TABLE `funcionarios`
-  ADD CONSTRAINT `fk_funcionarios_setor1` FOREIGN KEY (`setor_id`) REFERENCES `setor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_funcionarios_setor1` FOREIGN KEY (`funcao`) REFERENCES `setor_funcao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `funcionarios_emails`
+-- Limitadores para a tabela `funcionarios_emails`
 --
 ALTER TABLE `funcionarios_emails`
   ADD CONSTRAINT `fk_funcionarios_has_emails_emails1` FOREIGN KEY (`emails_id`) REFERENCES `emails` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_funcionarios_has_emails_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `funcionarios_possui_coletor`
+-- Limitadores para a tabela `funcionarios_possui_coletor`
 --
 ALTER TABLE `funcionarios_possui_coletor`
   ADD CONSTRAINT `fk_funcionarios_has_coletor_coletor1` FOREIGN KEY (`coletor_id`) REFERENCES `coletor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_funcionarios_has_coletor_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `funcionarios_possui_manual`
+-- Limitadores para a tabela `imagem_topicos`
 --
-ALTER TABLE `funcionarios_possui_manual`
-  ADD CONSTRAINT `fk_funcionarios_has_topicos_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `imagem_topicos`
+  ADD CONSTRAINT `fk_imagem_topico1` FOREIGN KEY (`topico_id`) REFERENCES `topico` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `licencas_software`
+-- Limitadores para a tabela `licencas_software`
 --
 ALTER TABLE `licencas_software`
   ADD CONSTRAINT `fk_licencas_software_banco_dados1` FOREIGN KEY (`banco_dados_id`) REFERENCES `banco_dados` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1056,55 +1161,74 @@ ALTER TABLE `licencas_software`
   ADD CONSTRAINT `fk_licencas_software_servidores1` FOREIGN KEY (`servidores_id`) REFERENCES `servidores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `manual_possui_topico`
+-- Limitadores para a tabela `manual_permisao`
 --
-ALTER TABLE `manual_possui_topico`
-  ADD CONSTRAINT `fk_funcionarios_possui_topicos_topicos1` FOREIGN KEY (`topicos_id`) REFERENCES `topicos` (`id_topico`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `manual_permisao`
+  ADD CONSTRAINT `fk_permisao_manual` FOREIGN KEY (`manual_id`) REFERENCES `manual` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_permisao_setor` FOREIGN KEY (`setor_id`) REFERENCES `setor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `mesa_cadeira`
+-- Limitadores para a tabela `mesa_cadeira`
 --
 ALTER TABLE `mesa_cadeira`
   ADD CONSTRAINT `fk_mesa_cadeira_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `projeto_execucao`
+-- Limitadores para a tabela `projeto_execucao`
 --
 ALTER TABLE `projeto_execucao`
   ADD CONSTRAINT `fk_funcionarios_has_projeto_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_funcionarios_has_projeto_projeto1` FOREIGN KEY (`projeto_id`) REFERENCES `projeto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `racks`
+-- Limitadores para a tabela `racks`
 --
 ALTER TABLE `racks`
   ADD CONSTRAINT `fk_racks_roteador_switches1` FOREIGN KEY (`roteador_switches_id`) REFERENCES `roteador_switches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_racks_servidores1` FOREIGN KEY (`servidores_id`) REFERENCES `servidores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `sensores`
+-- Limitadores para a tabela `sensores`
 --
 ALTER TABLE `sensores`
   ADD CONSTRAINT `fk_table1_alarmes1` FOREIGN KEY (`alarmes_id`) REFERENCES `alarmes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `servidores`
+-- Limitadores para a tabela `servidores`
 --
 ALTER TABLE `servidores`
   ADD CONSTRAINT `fk_servidores_banco_dados1` FOREIGN KEY (`banco_dados_id`) REFERENCES `banco_dados` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `uniforme_dos_funcionarios`
+-- Limitadores para a tabela `setor_funcao`
+--
+ALTER TABLE `setor_funcao`
+  ADD CONSTRAINT `fk_setor_funcao_setor1` FOREIGN KEY (`setor_id`) REFERENCES `setor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `topico`
+--
+ALTER TABLE `topico`
+  ADD CONSTRAINT `fk_topico_manual1` FOREIGN KEY (`manual_id`) REFERENCES `manual` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `uniforme_dos_funcionarios`
 --
 ALTER TABLE `uniforme_dos_funcionarios`
   ADD CONSTRAINT `fk_uniforme_has_funcionarios_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_uniforme_has_funcionarios_uniforme1` FOREIGN KEY (`uniforme_id`,`uniforme_tamanho`) REFERENCES `uniforme` (`id`, `tamanho`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Restrições para tabelas `veiculos`
+-- Limitadores para a tabela `veiculos`
 --
 ALTER TABLE `veiculos`
   ADD CONSTRAINT `fk_veiculos_funcionarios1` FOREIGN KEY (`funcionarios_id`) REFERENCES `funcionarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `video_topicos`
+--
+ALTER TABLE `video_topicos`
+  ADD CONSTRAINT `fk_video_topico1` FOREIGN KEY (`topico_id`) REFERENCES `topico` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
