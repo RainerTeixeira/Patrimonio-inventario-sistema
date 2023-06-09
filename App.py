@@ -10,9 +10,6 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib import colors
 from flask_ckeditor import CKEditor
 
-
-
-
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 app.secret_key = "Secret Key"
@@ -28,7 +25,6 @@ db = SQLAlchemy(app)
 
 class Funcionario(db.Model):
     __tablename__ = 'funcionarios'
-
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     ativo = db.Column(db.Enum('Ativo', 'Desligado'), nullable=False)
@@ -37,25 +33,28 @@ class Funcionario(db.Model):
     senha = db.Column(db.String(45))
     nivel_permissao = db.Column(db.Enum('Administrador', 'Usuário'))
     funcao = db.Column(db.Integer, db.ForeignKey('setor_funcao.id'), nullable=False)
-
     setor = db.relationship('SetorFuncao', backref=db.backref('funcionarios', lazy=True))
 
 class Setor(db.Model):
     __tablename__ = 'setor'
-
     id = db.Column(db.Integer, primary_key=True)
     nome_setor = db.Column(db.String(45))
 
 class SetorFuncao(db.Model):
     __tablename__ = 'setor_funcao'
-
     id = db.Column(db.Integer, primary_key=True)
     nome_funcao = db.Column(db.String(45))
     setor_id = db.Column(db.Integer, db.ForeignKey('setor.id'), nullable=False)
 
+class Manual(db.Model):
+    __tablename__ = 'manual'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=True)
+
 @app.route('/')
 def index():
-    return render_template('index.html', bootstrap=bootstrap)
+    manuais = Manual.query.all()
+    return render_template('index.html', bootstrap=bootstrap, manuais=manuais)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -191,24 +190,25 @@ def gerar_pdf():
 
     return response
 
-
-
 @app.route('/procedimentos', methods=['GET'])
 def procedimentos():
     search_query = request.args.get('search_query')
     if search_query is not None:
         sql = text("""
-            SELECT t.conteudo
+            SELECT t.titulo, t.conteudo
             FROM topico t
-            WHERE t.conteudo LIKE :search_query
+            WHERE t.titulo LIKE :search_query
         """)
         result = db.session.execute(sql, {'search_query': f"%{search_query}%"})
     else:
-        sql = text("SELECT t.conteudo FROM topico t")
+        sql = text("SELECT t.titulo, t.conteudo FROM topico t")
         result = db.session.execute(sql)
         
-    topicos = [row[0] for row in result]
-    return render_template('procedimentos.html', topicos=topicos)
+    topicos = [{'titulo': row[0], 'conteudo': row[1]} for row in result]
+
+    manuais = Manual.query.all()  # Adicione esta linha para buscar os dados da tabela manual
+
+    return render_template('procedimentos.html', topicos=topicos, manuais=manuais)
 
 
 

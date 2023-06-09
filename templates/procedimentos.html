@@ -10,29 +10,14 @@
         <div class="col-md-3">
             <div class="manual-nav">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#topico1">Tópico 1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#topico2">Tópico 2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#topico3">Tópico 3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#topico4">Tópico 4</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#topico5">Tópico 5</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#topico6">Tópico 6</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#topico7">Tópico 7</a>
-                    </li>
-                    <!-- Resto dos tópicos -->
+                    {% for topico in topicos %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#topico{{ topico.id }}">{{ topico.titulo }}</a>
+                        </li>
+                    {% endfor %}
                 </ul>
+                
+                
             </div>        
         </div>
         <div class="col-md-9">
